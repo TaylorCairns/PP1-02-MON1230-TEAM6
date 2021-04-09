@@ -11,11 +11,3 @@ def login():
 def register():
     return render_template('register.html')
 
-@app.route('/rent')
-def rent():
-    return render_template('rent.html')
-
-
-@app.route('/account')
-def rent():
-    return render_template('account.html')
