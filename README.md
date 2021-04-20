@@ -2,6 +2,7 @@
 PP1-02-MON1230-TEAM6
 
 
+
 How to get running 
 
 
@@ -13,3 +14,4 @@ Go to project location
 pip install -r requirements.txt
 set FLASK_APP=app
 flask run
+
