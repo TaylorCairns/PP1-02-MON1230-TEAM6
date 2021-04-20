@@ -52,16 +52,18 @@ def register():
         lastName = request.form['lastName']
         userType = 'customer'
         licenseNo = 'none'
-        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM users WHERE username = %s', (username,))
-        acc = cursor.fetchone()
-        
         # generates a Salt and Hashes the Password with sha256
         salt = "lcyysk2NAQOJCHxkM1fA"
         saltPass = password+salt
         hashPass = hashlib.sha256(saltPass.encode())
         encryptPass = hashPass.hexdigest()
 
+        #Chec if account exists
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT * FROM users WHERE username = %s', (username,))
+        acc = cursor.fetchone()
+        
+        
         if acc:
             msg = 'Account already exists'
         elif not username or not password or not email:
