@@ -27,6 +27,11 @@ def login():
         cursor.execute('SELECT * FROM users WHERE username = %s and password = %s', (username, password))
         acc = cursor.fetchone()
         if acc:
+            session['logged'] = True
+            session['user'] = acc['username']
+            session['type'] = acc['userType']
+            session['name'] = acc['firstname']
+
             return redirect(url_for('rent'))
         else:
             msg = 'Incorrect Username or Password'
@@ -72,6 +77,16 @@ def register():
 @app.route('/rent')
 def rent():
     return render_template('rent.html')
+
+
+@app.route('/logout')
+def logout():
+    session.pop('logged', none)
+    session.pop('username', none)
+    session.pop('userType', none)
+    session.pop('firstname', none)
+
+    return redirect(url_for('login'))
 
 
 
