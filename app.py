@@ -23,8 +23,14 @@ def login():
         username = request.form['username']
         password = request.form['password']
 
+        # generates a Salt and Hashes the Password with sha256
+        salt = "lcyysk2NAQOJCHxkM1fA"
+        saltPass = password+salt
+        hashPass = hashlib.sha256(saltPass.encode())
+        encryptPass = hashPass.hexdigest()
+        
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM users WHERE username = %s and password = %s', (username, password))
+        cursor.execute('SELECT * FROM users WHERE username = %s and password = %s', (username, encryptPass))
         acc = cursor.fetchone()
         if acc:
             return redirect(url_for('rent'))
@@ -46,16 +52,24 @@ def register():
         lastName = request.form['lastName']
         userType = 'customer'
         licenseNo = 'none'
+        # generates a Salt and Hashes the Password with sha256
+        salt = "lcyysk2NAQOJCHxkM1fA"
+        saltPass = password+salt
+        hashPass = hashlib.sha256(saltPass.encode())
+        encryptPass = hashPass.hexdigest()
+
+        #Chec if account exists
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM users WHERE username = %s', (username,))
         acc = cursor.fetchone()
-
+        
+        
         if acc:
             msg = 'Account already exists'
         elif not username or not password or not email:
             msg = 'Please fill out the form'
         else:
-            cursor.execute('INSERT INTO users VALUES (%s, %s, %s, %s, %s, %s, %s)', (username, password, email, firstName, lastName, licenseNo, userType))
+            cursor.execute('INSERT INTO users VALUES (%s, %s, %s, %s, %s, %s, %s)', (username, encryptPass, email, firstName, lastName, licenseNo, userType))
             mysql.connection.commit()
             msg = 'You have successfully registered!'
             return redirect(url_for('login'))
