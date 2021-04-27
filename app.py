@@ -5,7 +5,7 @@ import hashlib
 
 app = Flask(__name__)
 app.secret_key = 'yoursecretkey'
-app.config['MYSQL_HOST'] = '34.87.208.208'
+app.config['MYSQL_HOST'] = '34.116.121.90'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = 'genrental'
 app.config['MYSQL_DB'] = 'genrentaldb'
