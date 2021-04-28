@@ -104,3 +104,13 @@ def logout():
 
 
 
+@app.route('/profile')
+def profile():
+    if 'logged' in session:
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT * FROM users WHERE id = %s', (session['user'],))
+        user = cursor.fetchone()
+        return render_template('profile.html', typeOfUser=session['userType'], user=user)
+
+    return redirect(url_for('login'))
+
