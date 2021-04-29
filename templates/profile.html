@@ -1,1 +1,51 @@
-<h2>Profile Page</h2>
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Profile</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	</head>
+	<body>
+		<div class="Profile">
+			<h1>Profile</h1>
+			<div class="links">
+				<a href="{{ url_for('login') }}">Login</a>
+				<a href="{{ url_for('register') }}">Register</a>
+                <a href="{{ url_for('profile') }}" class="active">Profile</a>
+			</div>
+            <div>
+                <p>Your account details:</p>
+                <table>
+                    <tr>
+                        <td>Username:</td>
+                        <td>{{ user['username'] }}</td>
+                    </tr>
+                    <tr>
+                        <td>Password:</td>
+                        <td>{{ user['password'] }}</td>
+                    </tr>
+                    <tr>
+                        <td>First Name:</td>
+                        <td>{{ user['firstname'] }}</td>
+                    </tr>
+                    <tr>
+                        <td>Last Name:</td>
+                        <td>{{ user['lastname'] }}</td>
+                    </tr>
+                    <tr>
+                        <td>LicenseNo:</td>
+                        <td>{{ user['LicenseNo'] }}</td>
+                    </tr>
+                    <tr>
+                        <td>Email:</td>
+                        <td>{{ user['email'] }}</td>
+                    </tr>
+                    <tr>
+                        <td>User Type:</td>
+                        <td>{{ user['userType'] }}</td>
+                    </tr>
+                </table>
+            </div>
+		</div>
+	</body>
+</html>
