@@ -90,7 +90,20 @@ def register():
 
 @app.route('/rent')
 def rent():
-    return render_template('rent.html')
+
+    if 'logged' in session:
+        if request.method == 'GET':
+            user = session['user']
+            cursor = mysql.connection.cursor(MySQLdb.cursor.DictCursor)
+            cursor.execute('SELECT * FROM bookings WHERE username = %s', (user))
+            history = cursor.fetchall()
+            mysql.connection.commit()
+            
+            return render_template('rent.html', userType=session['type'], userHistory=history, username=user)
+
+        return render_template('rent.html', userType=session['type'], username=session['username'])
+            
+    return redirect(url_for('login'))
 
 
 @app.route('/logout')
