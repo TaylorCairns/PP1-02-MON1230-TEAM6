@@ -127,3 +127,8 @@ def profile():
 
     return redirect(url_for('login'))
 
+@app.route('/policy')
+def policy():
+    
+
+    return render_template('policy.html')
