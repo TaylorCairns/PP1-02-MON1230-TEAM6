@@ -98,8 +98,14 @@ def rent():
             cursor.execute('SELECT * FROM bookings WHERE username = %s', (user))
             history = cursor.fetchall()
             mysql.connection.commit()
+
+            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            cursor.execute('SELECT * FROM cars')
+            cars = cursor.fetchall()
+
+
             
-            return render_template('rent.html', userType=session['type'], userHistory=history, username=user)
+            return render_template('rent.html', userType=session['type'], userHistory=history, username=user, cars=cars)
 
         return render_template('rent.html', userType=session['type'], username=session['username'])
             
