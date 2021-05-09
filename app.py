@@ -10,8 +10,8 @@ app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = 'genrental'
 app.config['MYSQL_DB'] = 'genrentaldb'
 
-mysql = MySQL(app)
 
+mysql = MySQL(app)
 
 
 
@@ -114,3 +114,36 @@ def profile():
 
     return redirect(url_for('login'))
 
+
+@app.route('/edituser', methods=['GET', 'POST'])
+def edituser():
+    
+    
+    msg = ''
+    if request.method == 'POST' and 'selectUser' in request.form and 'changeSection' in request.form and 'newValue' in request.form:
+        
+        
+        selectUser = request.form['selectUser']
+        changeSection = request.form['changeSection']
+        newValue = request.form['newValue']
+
+        print(changeSection)
+        
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        if changeSection == 'firstname':
+            cursor.execute('UPDATE users SET firstname = %s WHERE username = %s',(newValue, selectUser))
+            mysql.connection.commit()
+        if changeSection == 'lastname':
+            cursor.execute('UPDATE users SET lastname = %s WHERE username = %s',(newValue, selectUser))
+            mysql.connection.commit()
+        if changeSection == 'userType':
+            cursor.execute('UPDATE users SET userType = %s WHERE username = %s',(newValue, selectUser))
+            mysql.connection.commit()
+        if changeSection == 'licenseNo':
+            cursor.execute('UPDATE users SET licenseNo = %s WHERE username = %s',(newValue, selectUser))
+            mysql.connection.commit()
+        
+        
+
+        
+    return render_template('editUser.html')   

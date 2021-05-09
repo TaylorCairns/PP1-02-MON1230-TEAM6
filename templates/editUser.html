@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Edit User</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	</head>
+	<body>
+		<div class="edituser">
+			<h1>Edit User account</h1>
+			<!--<div class="links">
+				<a href="{{ url_for('login') }}" class="active">Login</a>
+				<a href="{{ url_for('register') }}">Register</a>
+			</div>-->
+			<form action="{{ url_for('edituser') }}" method="post">
+				<label for="changeSection"></label>
+                <select name="changeSection" id="cars">
+                    <option value="firstname">first name</option>
+                    <option value="lastname">last Name</option>
+                    <option value="userType">User Type</option>
+                    <option value="LicenseNo">License Number</option>
+                </select>
+                
+                <label for="selectUser">
+					<!--<i class="fas fa-user"></i>-->
+				</label>
+				<input type="text" name="selectUser" placeholder="selectUser" id="selectUser" required>
+				<!--<label for="changeSection">-->
+					<!--<i class="fas fa-lock"></i>-->
+				<!--</label>
+				<input type="text" name="changeSection" placeholder="changeSection" id="changeSection" required>-->
+                <label for="newValue">
+					
+				</label>
+				<input type="text" name="newValue" placeholder="newValue" id="newValue" required>
+				<div class="msg">{{ msg }}</div>
+				<input type="submit" value="Change">
+			</form>
+		</div>
+	</body>
+</html>
