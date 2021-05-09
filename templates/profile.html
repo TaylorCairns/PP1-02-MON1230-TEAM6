@@ -41,9 +41,28 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     
     <body>
-		<div class="Profile">
-			<h1>Profile</h1>
-            <div>
+		  <div class="Profile">
+			  <h1>Profile</h1>
+        <h2>Edit account</h2>
+          
+        <form action="{{ url_for('profile') }}" method="post">
+         
+          <label for="changeSection"></label>
+          <select name="changeSection" id="user">
+            <option value="firstname">first name</option>
+            <option value="lastname">last Name</option>
+            <option value="email">Email</option>
+            <option value="LicenseNo">License Number</option>
+          </select>
+                
+                
+          <label for="newValue"></label>
+          <input type="text" name="newValue" placeholder="newValue" id="newValue" required>
+              
+              <div class="msg">{{ msg }}</div>
+                
+              <input type="submit" value="edit">
+        </form> 
                 <p>Your account details:</p>
                 <table>
                     <tr>

@@ -13,7 +13,8 @@
 				<a href="{{ url_for('register') }}">Register</a>
 			</div>-->
 			<form action="{{ url_for('edituser') }}" method="post">
-				<label for="changeSection"></label>
+				
+                <label for="changeSection"></label>
                 <select name="changeSection" id="cars">
                     <option value="firstname">first name</option>
                     <option value="lastname">last Name</option>
@@ -22,13 +23,10 @@
                 </select>
                 
                 <label for="selectUser">
-					<!--<i class="fas fa-user"></i>-->
+					
 				</label>
 				<input type="text" name="selectUser" placeholder="selectUser" id="selectUser" required>
-				<!--<label for="changeSection">-->
-					<!--<i class="fas fa-lock"></i>-->
-				<!--</label>
-				<input type="text" name="changeSection" placeholder="changeSection" id="changeSection" required>-->
+				
                 <label for="newValue">
 					
 				</label>
@@ -36,6 +34,32 @@
 				<div class="msg">{{ msg }}</div>
 				<input type="submit" value="Change">
 			</form>
+            
+            <h2>Users</h2>
+            <div>
+                <table id="userTable">
+                    <TR>
+                        <TD>Username</TD>
+                        <TD>First Name</TD>
+                        <TD>Last Name</TD>
+                        <TD>Email</TD>
+                        <TD>License Number</TD>
+                        <TD>User Type</TD>
+                    </TR>
+
+                    {% for row in user %}
+                    <TR>
+                        <TD>{{row.username}}</TD>
+                        <TD>{{row.firstname}}</TD>
+                        <TD>{{row.lastname}}</TD>
+                        <TD>{{row.email}}</TD>
+                        <TD>{{row.licenseNo}}</TD>
+                        <TD>{{row.userType}}</TD>
+                    </TR>
+                    {% endfor %}
+                </table>
+            </div>
+
 		</div>
 	</body>
 </html>
