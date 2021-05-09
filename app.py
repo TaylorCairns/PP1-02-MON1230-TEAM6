@@ -128,7 +128,7 @@ def edituser():
         newValue = request.form['newValue']
 
         print(changeSection)
-        
+         
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         if changeSection == 'firstname':
             cursor.execute('UPDATE users SET firstname = %s WHERE username = %s',(newValue, selectUser))
