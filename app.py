@@ -92,10 +92,10 @@ def register():
 def rent():
 
     if 'logged' in session:
-        if request.method == 'GET':
+        if request.method == 'GET' or request.method == 'POST':
             user = session['user']
-            cursor = mysql.connection.cursor(MySQLdb.cursor.DictCursor)
-            cursor.execute('SELECT * FROM bookings WHERE username = %s', (user))
+            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            cursor.execute('SELECT * FROM bookings WHERE username = %s', (session['user'],))
             history = cursor.fetchall()
             mysql.connection.commit()
 
@@ -108,6 +108,8 @@ def rent():
             return render_template('rent.html', userType=session['type'], userHistory=history, username=user, cars=cars)
 
         return render_template('rent.html', userType=session['type'], username=session['username'])
+        
+
             
     return redirect(url_for('login'))
 
