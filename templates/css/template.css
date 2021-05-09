@@ -1,23 +1,25 @@
-body {
-    background: #222D32;
+html, body {
+    background-color: rgb(34, 38, 48)!important;
     font-family: 'Roboto', sans-serif;
 }
 
 .login-box {
     margin-top: 75px;
     height: auto;
-    background: #1A2226;
+    background: rgb(11, 110, 133);
     text-align: center;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
 
+@media all and (max-width: 768px) {
 .login-key {
-    height: 100px;
+    height: max-height;
     font-size: 80px;
     line-height: 100px;
-    background: -webkit-linear-gradient(#27EF9F, #0DB8DE);
+    background: -webkit-linear-gradient(#27EF9F, rgb(11, 110, 133));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+}
 }
 
 .login-title {
@@ -27,7 +29,7 @@ body {
     letter-spacing: 2px;
     margin-top: 15px;
     font-weight: bold;
-    color: #ECF0F5;
+    color: rgb(34, 38, 48);
 }
 
 .login-form {
@@ -87,7 +89,7 @@ label {
 
 .form-control-label {
     font-size: 10px;
-    color: #6C6C6C;
+    color: rgb(34, 38, 48);
     font-weight: bold;
     letter-spacing: 1px;
 }
@@ -107,11 +109,11 @@ label {
 }
 
 .login-btm {
-    float: left;
+    float: right;
 }
 
 .login-button {
-    padding-right: 0px;
+    padding-right: 0x;
     text-align: right;
     margin-bottom: 25px;
 }
