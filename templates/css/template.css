@@ -1,5 +1,5 @@
-body {
-    background: rgb(34, 38, 48);
+html, body {
+    background-color: rgb(34, 38, 48)!important;
     font-family: 'Roboto', sans-serif;
 }
 
