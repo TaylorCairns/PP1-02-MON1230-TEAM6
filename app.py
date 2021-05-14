@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, url_for, session, redirect
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
 import hashlib
+from datetime import datetime, timedelta
 
 app = Flask(__name__)
 app.secret_key = 'yoursecretkey'
@@ -92,7 +93,7 @@ def register():
 def rent():
 
     if 'logged' in session:
-        if request.method == 'GET' or request.method == 'POST':
+        if request.method == 'GET':
             user = session['user']
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
             cursor.execute('SELECT * FROM bookings WHERE username = %s', (session['user'],))
@@ -102,9 +103,7 @@ def rent():
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
             cursor.execute('SELECT * FROM cars')
             cars = cursor.fetchall()
-
-
-            
+ 
             return render_template('rent.html', userType=session['type'], userHistory=history, username=user, cars=cars)
 
         return render_template('rent.html', userType=session['type'], username=session['username'])
@@ -112,6 +111,74 @@ def rent():
 
             
     return redirect(url_for('login'))
+
+
+
+@app.route('/booking')
+def booking():
+    if 'logged' in session:
+        if request.method == 'POST':
+                user = session['user']
+                date = datetime.now()
+                carLicense = request.form['carLicense']
+                numhrs = request.form['numhrs']
+
+                cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+                cursor.execute('SELECT * FROM cars WHERE license = %s', (carLicense, ))
+
+
+                cars = cursor.fetchone()
+                mysql.connection.commit()
+
+                cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+                cursor.execute('SELECT * FROM bookings WHERE username = %s', (user, ))
+
+                history = cursor.fetchall()
+                mysql.connection.commit()
+
+                if cars:
+                    if numhrs.isDigit() == True:
+                        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+                        cursor.execute('INSERT INTO bookings (username, license, date, hrs, completed) VALUES (%s, %s, %s, %s, %s)', (user, carLicense, date, numhrs, 'No'))
+                        mysql.connection.commit()
+
+        return render_template('rent.html', userType=session['type'], userHistory=history, username=user, cars=cars)
+    else:
+        return redirect(url_for('login'))
+
+@app.route('/cancelBooking')
+def cancelBooking():
+    if 'logged' in session:
+        if request.method == 'POST':
+            user = session['user']
+            cancelId = request.form['cancelId']
+            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            cursor.execute('SELECT * FROM bookings WHERE license = %s', (cancelId, ))
+            cancelBooking = cursor.fetchone()
+            mysql.connection.commit()
+
+            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            cursor.execute('SELECT * FROM bookings WHERE username = %s', (user, ))
+
+            history = cursor.fetchall()
+            mysql.connection.commit()
+
+            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            cursor.execute('SELECT * FROM cars')
+            cars = cursor.fetchall()
+            mysql.connection.commit()
+
+            if cancelBooking:
+                cursor.execute('UPDATE bookings SET completed = %s WHERE license = %s', ('Yes', cancelId))
+
+                return render_template('rent.html', userType=session['type'], userHistory=history, username=user, cars=cars)
+            return redirect(url_for('rent'))
+        return redirect(url_for('rent'))
+
+
+
+    else:
+        return redirect(url_for('login'))
 
 
 @app.route('/logout')
@@ -131,7 +198,7 @@ def profile():
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM users WHERE username = %s', (session['user'],))
         user = cursor.fetchone()
-        return render_template('profile.html', typeOfUser=session['type'], user=user)
+        return render_template('profile.html', userType=session['type'], user=user)
 
     return redirect(url_for('login'))
 
