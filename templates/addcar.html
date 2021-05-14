@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>addcar</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	</head>
+	<body>
+		<div class="addcar">
+			<h1>Manager</h1>
+
+			<form action="{{ url_for('addcar') }}" method="post" autocomplete="off">
+				
+				<label for="license">
+				</label>
+				<input type="text" name="license" placeholder="license" id="license" required>
+				
+                <label for="make">	
+				</label>
+				<input type="text" name="make" placeholder="make" id="make" required>
+				
+                <label for="model">	
+				</label>
+				<input type="text" name="model" placeholder="model" id="model" required>
+				
+                <label for="color">	
+				</label>
+				<input type="text" name="color" placeholder="color" id="color" required>
+				
+				<label for="rating">	
+				</label>
+				<input type="text" name="rating" placeholder="rating" id="rating" required>
+
+				<label for="longlat">	
+				</label>
+				<input type="text" name="longlat" placeholder="longlat" id="longlat" required>
+				
+				<label for="location">	
+				</label>
+				<input type="text" name="location" placeholder="location" id="location" required>
+				<div class="msg">{{ msg }}</div>
+				<input type="submit" value="add">
+			</form>
+		</div>
+	</body>
+</html>

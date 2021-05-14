@@ -206,7 +206,39 @@ def edituser():
         user = cursor.fetchall()
         return render_template('editUser.html', user=user)
         
-      
+@app.route('/addcar', methods=['GET', 'POST'])
+def addcar():      
+    msg = ''
+    if request.method == 'POST' and 'license' in request.form and 'make' in request.form and 'model' and 'color' in request.form and 'rating' in request.form and 'longlat' in request.form and 'location' in request.form:
+        license = request.form['license']
+        make = request.form['make']
+        model = request.form['model']
+        color = request.form['color']
+        longlat = request.form['longlat']
+        rating = request.form['rating']
+        location = request.form['location']
+        #userType = 'customer'
+        #licenseNo = 'none'
 
+        #Chec if account exists
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT * FROM cars WHERE license = %s', (license,))
+        acc = cursor.fetchone()
         
-    return render_template('editUser.html')   
+        
+        if acc:
+            msg = 'Account already exists'
+        elif not location or not make or not model or not color or not rating or not location:
+            msg = 'Please fill out the form'
+        else:
+            cursor.execute('INSERT INTO cars VALUES (%s, %s, %s, %s, %s, %s)', (license, make, model, color, rating, location))
+            mysql.connection.commit()
+            msg = 'You have successfully added a new car!'
+            #return redirect(url_for('login'))
+            
+    elif request.method == 'POST':
+        msg = 'Please fill out form'
+
+
+
+    return render_template('addcar.html', msg=msg)
