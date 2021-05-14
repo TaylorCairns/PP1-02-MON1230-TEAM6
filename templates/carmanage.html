@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>genRental</title>
+    <style>
+        .form-popup {
+            display: none;
+            position: fixed;
+            border: 3px solid #f1f1f1;
+            z-index: 9;
+        }
+
+        .btn-group button {
+            background-color: #04AA6D;
+            border: 1px solid green;
+            color: white;
+            padding: 10px 24px;
+            cursor: pointer;
+        }
+
+        .open-button {
+            background-color: #555;
+            color: white;
+            padding: 16px 20px;
+            border: none;
+            cursor: pointer;
+            opacity: 0.8;
+            width: 280px;
+        }
+    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}">
+</head>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#"></a>
+    <img src="https://i.ibb.co/YZh1fvQ/sN89ncS.png" alt="logo" style="width:50px;height:50px;">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Rent <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('profile') }}">Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Log In</a>
+            </li>
+            <li class="nav-item">
+            <li class="nav-item">
+                <a class="nav-link" href="#">Sign Up</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Contact Us</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('map') }}">Map</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+
+<body>
+    <div class="btn-group" style="width: 50%; display: block" id="navbarButtons">
+        <button class="open-button" onclick="openAddForm()">Add Car</button>
+        <button class="open-button" onclick="openEditForm()">Edit Car</button>
+        <button class="open-button" onclick="openDeleteForm()">Delete Car</button>
+    </div>
+
+    <div class="container">
+    </div>
+
+    <script>
+        function openAddForm() {
+            const form = document.getElementsByClassName('container')[0];
+            removeChild(form);
+
+            var divRow = document.createElement("div");
+            divRow.setAttribute('class', "row");
+
+            var divAlign = document.createElement("div");
+            divAlign.setAttribute('class', "col-lg-3 col-md-2");
+
+            var divLoginBox = document.createElement("div");
+            divLoginBox.setAttribute('class', "col-lg-6 col-md-8 login-box");
+
+            var divTitle = document.createElement("div");
+            divTitle.setAttribute('class', "col-lg-12 login-title");
+            divTitle.innerHTML = "Add Car";
+
+            var divLoginForm = document.createElement("div");
+            divLoginForm.setAttribute('class', "col-lg-12 login-form");
+
+            divRow.appendChild(divAlign);
+            divRow.appendChild(divLoginBox);
+            divLoginBox.appendChild(divTitle);
+
+            var f = document.createElement("form");
+            f.setAttribute('method', "post");
+            f.setAttribute('action', "{{ url_for('carmanage') }}");
+
+            var divCarModel = document.createElement("div");
+            divCarModel.setAttribute('class', "form-group");
+            var carModelLabel = document.createElement("label");
+            carModelLabel.setAttribute('for', "carModel");
+            carModelLabel.setAttribute('class', "form-control-label");
+            carModelLabel.innerHTML = "Car Model";
+            divCarModel.appendChild(carModelLabel);
+
+            var carModelInput = document.createElement("input");
+            carModelInput.setAttribute('type', "text");
+            carModelInput.setAttribute('class', "form-control");
+            carModelInput.setAttribute('placeholder', "Enter Car Model")
+            carModelInput.setAttribute('name', "carmodel");
+            divCarModel.appendChild(carModelInput);
+
+            var divCarColor = document.createElement("div");
+            divCarColor.setAttribute('class', "form-group");
+            var carColorLable = document.createElement("label");
+            carColorLable.setAttribute('for', "carModel");
+            carColorLable.setAttribute('class', "form-control-label");
+            carColorLable.innerHTML = "Car Color";
+            divCarColor.appendChild(carColorLable);
+
+            var carColorInput = document.createElement("input");
+            carColorInput.setAttribute('type', "text");
+            carColorInput.setAttribute('class', "form-control");
+            carColorInput.setAttribute('placeholder', "Enter Car Color")
+            carColorInput.setAttribute('name', "carcolor");
+            divCarColor.appendChild(carColorInput);
+
+            var divSubmitButton = document.createElement("div");
+            divSubmitButton.setAttribute('class', "col-lg-6 login-btm login-button");
+            var submitButton = document.createElement("button");
+            submitButton.setAttribute('type', "submit");
+            submitButton.setAttribute('class', "btn btn-outline-primary")
+            submitButton.setAttribute('value', "Submit");
+            submitButton.innerText = "Submit";
+            divSubmitButton.appendChild(submitButton);
+
+            f.appendChild(divCarModel);
+            f.appendChild(divCarColor);
+            f.appendChild(divSubmitButton);
+
+            divLoginForm.appendChild(f);
+            divLoginBox.appendChild(divLoginForm);
+
+            document.getElementsByClassName('container')[0].appendChild(divRow);
+        }
+
+        function removeChild(parent) {
+            while (parent.firstChild) {
+                parent.removeChild(parent.firstChild);
+            }
+        }
+
+        function openEditForm() {
+
+        }
+
+        function openDeleteForm() {
+            document.getElementById("myDeleteForm").style.display = "block";
+        }
+
+        function closeForm() {
+            document.getElementsByClassName("col-lg-12 login-form").style.display = "none";
+        }
+    </script>
+</body>
+
+</html>
