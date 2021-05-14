@@ -121,7 +121,7 @@ def booking():
                 user = session['user']
                 date = datetime.now()
                 carLicense = request.form['carLicense']
-                numhrs = request.form['numhrs']
+                #numhrs = request.form['numhrs']
 
                 cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
                 cursor.execute('SELECT * FROM cars WHERE license = %s', (carLicense, ))
@@ -137,10 +137,10 @@ def booking():
                 mysql.connection.commit()
 
                 if cars:
-                    if numhrs.isDigit() == True:
-                        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-                        cursor.execute('INSERT INTO bookings (username, license, date, hrs, completed) VALUES (%s, %s, %s, %s, %s)', (user, carLicense, date, numhrs, 'No'))
-                        mysql.connection.commit()
+                    
+                    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+                    cursor.execute('INSERT INTO bookings (username, license, date, hrs, completed) VALUES (%s, %s, %s, %s)', (user, carLicense, date, 'No'))
+                    mysql.connection.commit()
 
         return render_template('rent.html', userType=session['type'], userHistory=history, username=user, cars=cars)
     else:
