@@ -231,7 +231,7 @@ def addcar():
         elif not location or not make or not model or not color or not rating or not location:
             msg = 'Please fill out the form'
         else:
-            cursor.execute('INSERT INTO cars VALUES (%s, %s, %s, %s, %s, %s)', (license, make, model, color, rating, location))
+            cursor.execute('INSERT INTO cars VALUES (%s, %s, %s, %s, %s, %s, %s)', (license, color, model, make, longlat, location, rating))
             mysql.connection.commit()
             msg = 'You have successfully added a new car!'
             #return redirect(url_for('login'))
