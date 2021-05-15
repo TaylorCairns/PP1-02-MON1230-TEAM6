@@ -7,11 +7,18 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>genRental</title>
     <style>
-        .form-popup {
-            display: none;
-            position: fixed;
-            border: 3px solid #f1f1f1;
-            z-index: 9;
+        .form-box {
+            margin-top: 75px;
+            height: auto;
+            background: rgb(11, 110, 133);
+            text-align: center;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+            width: 80%;
+            padding: 50px;
+        }
+
+        table {
+            width: 90%;
         }
 
         .btn-group button {
@@ -30,6 +37,13 @@
             cursor: pointer;
             opacity: 0.8;
             width: 280px;
+        }
+
+        table {
+            width: 100%;
+            color: white;
+            border: 1px solid black;
+            border-collapse: collapse;
         }
     </style>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -102,7 +116,7 @@
             divAlign.setAttribute('class', "col-lg-3 col-md-2");
 
             var divLoginBox = document.createElement("div");
-            divLoginBox.setAttribute('class', "col-lg-6 col-md-8 login-box");
+            divLoginBox.setAttribute('class', "col-lg-6 col-md-8 form-box");
 
             var divTitle = document.createElement("div");
             divTitle.setAttribute('class', "col-lg-12 login-title");
@@ -119,6 +133,21 @@
             f.setAttribute('method', "post");
             f.setAttribute('action', "{{ url_for('carmanage') }}");
 
+            var divCarLicense = document.createElement("div");
+            divCarLicense.setAttribute('class', "form-group");
+            var carLicenseLabel = document.createElement("label");
+            carLicenseLabel.setAttribute('for', "carLicense");
+            carLicenseLabel.setAttribute('class', "form-control-label");
+            carLicenseLabel.innerHTML = "Car License";
+            divCarLicense.appendChild(carLicenseLabel);
+
+            var carLicenseInput = document.createElement("input");
+            carLicenseInput.setAttribute('type', "text");
+            carLicenseInput.setAttribute('class', "form-control");
+            carLicenseInput.setAttribute('placeholder', "Enter Car License")
+            carLicenseInput.setAttribute('name', "license");
+            divCarLicense.appendChild(carLicenseInput);
+
             var divCarModel = document.createElement("div");
             divCarModel.setAttribute('class', "form-group");
             var carModelLabel = document.createElement("label");
@@ -131,23 +160,93 @@
             carModelInput.setAttribute('type', "text");
             carModelInput.setAttribute('class', "form-control");
             carModelInput.setAttribute('placeholder', "Enter Car Model")
-            carModelInput.setAttribute('name', "carmodel");
+            carModelInput.setAttribute('name', "model");
             divCarModel.appendChild(carModelInput);
 
             var divCarColor = document.createElement("div");
             divCarColor.setAttribute('class', "form-group");
-            var carColorLable = document.createElement("label");
-            carColorLable.setAttribute('for', "carModel");
-            carColorLable.setAttribute('class', "form-control-label");
-            carColorLable.innerHTML = "Car Color";
-            divCarColor.appendChild(carColorLable);
+            var carColorLabel = document.createElement("label");
+            carColorLabel.setAttribute('for', "carColor");
+            carColorLabel.setAttribute('class', "form-control-label");
+            carColorLabel.innerHTML = "Car Color";
+            divCarColor.appendChild(carColorLabel);
 
             var carColorInput = document.createElement("input");
             carColorInput.setAttribute('type', "text");
             carColorInput.setAttribute('class', "form-control");
             carColorInput.setAttribute('placeholder', "Enter Car Color")
-            carColorInput.setAttribute('name', "carcolor");
+            carColorInput.setAttribute('name', "color");
             divCarColor.appendChild(carColorInput);
+
+            var divCarMake = document.createElement("div");
+            divCarMake.setAttribute('class', "form-group");
+
+            var carMakeLabel = document.createElement("label");
+            carMakeLabel.setAttribute('for', "carMake");
+            carMakeLabel.setAttribute('class', "form-control-label");
+            carMakeLabel.innerHTML = "Car Make";
+            divCarMake.appendChild(carMakeLabel);
+
+            var carMakeInput = document.createElement("input");
+            carMakeInput.setAttribute('type', "text");
+            carMakeInput.setAttribute('class', "form-control");
+            carMakeInput.setAttribute('placeholder', "Enter Car Make")
+            carMakeInput.setAttribute('name', "make");
+            divCarMake.appendChild(carMakeInput);
+
+            var divCarLocation = document.createElement("div");
+            divCarMake.setAttribute('class', "form-group");
+
+            var br = document.createElement("br");
+
+            var carLocationLabel = document.createElement("p");
+            carLocationLabel.setAttribute('for', "carModel");
+            carLocationLabel.setAttribute('class', "form-control-label");
+            carLocationLabel.innerHTML = "Car Location";
+            divCarLocation.appendChild(carLocationLabel);
+
+            var carLocationMelbouneRadio = document.createElement("input");
+            carLocationMelbouneRadio.setAttribute('type', "radio");
+            carLocationMelbouneRadio.setAttribute('id', "Melbourne");
+            carLocationMelbouneRadio.setAttribute('name', "location");
+            carLocationMelbouneRadio.setAttribute('value', "Melbourne");
+            divCarLocation.appendChild(carLocationMelbouneRadio);
+
+            var carLocationMelbouneLabel = document.createElement("label");
+            carLocationMelbouneLabel.setAttribute('for', "Melbourne");
+            carLocationMelbouneLabel.setAttribute('style', "margin-right: 50px");
+            carLocationMelbouneLabel.setAttribute('class', "form-control-label");
+            carLocationMelbouneLabel.innerHTML = "Melbourne";
+            divCarLocation.appendChild(carLocationMelbouneLabel);
+            divCarLocation.appendChild(br);
+
+            var carLocationSydneyRadio = document.createElement("input");
+            carLocationSydneyRadio.setAttribute('type', "radio");
+            carLocationSydneyRadio.setAttribute('id', "Sydney");
+            carLocationSydneyRadio.setAttribute('name', "location");
+            carLocationSydneyRadio.setAttribute('value', "Sydney");
+            divCarLocation.appendChild(carLocationSydneyRadio);
+
+            var carLocationSydneyLabel = document.createElement("label");
+            carLocationSydneyLabel.setAttribute('for', "Sydney");
+            carLocationSydneyLabel.setAttribute('class', "form-control-label");
+            carLocationSydneyLabel.innerHTML = "Sydney";
+            divCarLocation.appendChild(carLocationSydneyLabel);
+
+            var divCarRating = document.createElement("div");
+            divCarRating.setAttribute('class', "form-group");
+            var carRatingLabel = document.createElement("label");
+            carRatingLabel.setAttribute('for', "carRating");
+            carRatingLabel.setAttribute('class', "form-control-label");
+            carRatingLabel.innerHTML = "Car Rating";
+            divCarRating.appendChild(carRatingLabel);
+
+            var carRatingInput = document.createElement("input");
+            carRatingInput.setAttribute('type', "number");
+            carRatingInput.setAttribute('class', "form-control");
+            carRatingInput.setAttribute('placeholder', "Enter Car Rating")
+            carRatingInput.setAttribute('name', "rating");
+            divCarRating.appendChild(carRatingInput);
 
             var divSubmitButton = document.createElement("div");
             divSubmitButton.setAttribute('class', "col-lg-6 login-btm login-button");
@@ -158,8 +257,13 @@
             submitButton.innerText = "Submit";
             divSubmitButton.appendChild(submitButton);
 
+            f.appendChild(divCarLicense);
             f.appendChild(divCarModel);
             f.appendChild(divCarColor);
+            f.appendChild(divCarMake);
+            f.appendChild(divCarLocation);
+            f.appendChild(br);
+            f.appendChild(divCarRating);
             f.appendChild(divSubmitButton);
 
             divLoginForm.appendChild(f);
@@ -175,16 +279,273 @@
         }
 
         function openEditForm() {
+            const form = document.getElementsByClassName('container')[0];
+            removeChild(form);
 
+            var divRow = document.createElement("div");
+            divRow.setAttribute('class', "row");
+
+            var divAlign = document.createElement("div");
+            divAlign.setAttribute('class', "col-lg-3 col-md-2");
+
+            var divLoginBox = document.createElement("div");
+            divLoginBox.setAttribute('class', "col-lg-6 col-md-8 form-box");
+
+            var divTitle = document.createElement("div");
+            divTitle.setAttribute('class', "col-lg-12 login-title");
+            divTitle.innerHTML = "Edit Car";
+
+            var divLoginForm = document.createElement("div");
+            divLoginForm.setAttribute('class', "col-lg-12 login-form");
+
+            divRow.appendChild(divAlign);
+            divRow.appendChild(divLoginBox);
+            divLoginBox.appendChild(divTitle);
+
+            var f = document.createElement("form");
+            f.setAttribute('method', "post");
+            f.setAttribute('action', "{{ url_for('carmanage') }}");
+
+            var selection = document.createElement("select");
+            selection.setAttribute('name', "changeSection");
+            selection.setAttribute('id', "cars")
+            var optionLicense = document.createElement("option");
+            optionLicense.setAttribute('value', "license");
+            optionLicense.innerHTML = "License";
+            var optionColor = document.createElement("option");
+            optionColor.setAttribute('value', "color");
+            optionColor.innerHTML = "Color";
+            var optionModel = document.createElement("option");
+            optionModel.setAttribute('value', "model");
+            optionModel.innerHTML = "Model";
+            var optionMake = document.createElement("option");
+            optionMake.setAttribute('value', "make");
+            optionMake.innerHTML = "Make";
+            var optionLongLat = document.createElement("option");
+            optionLongLat.setAttribute('value', "longlat");
+            optionLongLat.innerHTML = "Longlat";
+            var optionLocation = document.createElement("option");
+            optionLocation.setAttribute('value', "location");
+            optionLocation.innerHTML = "Location";
+            var optionRating = document.createElement("option");
+            optionRating.setAttribute('value', "rating");
+            optionRating.innerHTML = "Rating";
+
+            selection.appendChild(optionLicense);
+            selection.appendChild(optionColor);
+            selection.appendChild(optionModel);
+            selection.appendChild(optionMake);
+            selection.appendChild(optionLongLat);
+            selection.appendChild(optionLocation);
+            selection.appendChild(optionRating);
+            f.appendChild(selection);
+
+            var selectLicenseInput = document.createElement("input");
+            selectLicenseInput.setAttribute('type', "text");
+            selectLicenseInput.setAttribute('name', "license");
+            selectLicenseInput.setAttribute('placeholder', "Please input license");
+
+            var newValueInput = document.createElement("input");
+            newValueInput.setAttribute('type', "text");
+            newValueInput.setAttribute('name', "newValue");
+            newValueInput.setAttribute('placeholder', "Please input new value");
+
+            var divSubmitButton = document.createElement("div");
+            divSubmitButton.setAttribute('class', "col-lg-6 login-btm login-button");
+            var submitButton = document.createElement("button");
+            submitButton.setAttribute('type', "submit");
+            submitButton.setAttribute('class', "btn btn-outline-primary")
+            submitButton.setAttribute('value', "Submit");
+            submitButton.innerText = "Submit";
+
+            f.appendChild(selectLicenseInput);
+            f.appendChild(newValueInput);
+            f.appendChild(submitButton);
+
+            var t = document.createElement("table");
+            var trTitle = document.createElement("tr")
+
+            var tdLicense = document.createElement("td");
+            tdLicense.innerHTML = "License";
+            trTitle.appendChild(tdLicense);
+            var tdColor = document.createElement("td");
+            tdColor.innerHTML = "Color";
+            trTitle.appendChild(tdColor);
+            var tdModel = document.createElement("td");
+            tdModel.innerHTML = "Model";
+            trTitle.appendChild(tdModel);
+            var tdMake = document.createElement("td");
+            tdMake.innerHTML = "Make";
+            trTitle.appendChild(tdMake);
+            var tdLongLat = document.createElement("td");
+            tdLongLat.innerHTML = "Longlat";
+            trTitle.appendChild(tdLongLat);
+            var tdLocation = document.createElement("td");
+            tdLocation.innerHTML = "Location";
+            trTitle.appendChild(tdLocation);
+            var tdRating = document.createElement("td");
+            tdRating.innerHTML = "Rating";
+            trTitle.appendChild(tdRating);
+            t.appendChild(trTitle);
+
+            var forStart = document.createElement("python");
+            forStart = "{% for row in car %}";
+            t.append(forStart);
+
+            var trValue = document.createElement("tr");
+            var tdLicenseValue = document.createElement("td");
+            tdLicenseValue.innerHTML = "{{ row.license }}";
+            var tdColorValue = document.createElement("td");
+            tdColorValue.innerHTML = "{{ row.color }}";
+            var tdModelValue = document.createElement("td");
+            tdModelValue.innerHTML = "{{ row.model }}";
+            var tdMakeValue = document.createElement("td");
+            tdMakeValue.innerHTML = "{{ row.make }}";
+            var tdLongLatValue = document.createElement("td");
+            tdLongLatValue.innerHTML = "{{ row.longlat }}";
+            var tdLocationValue = document.createElement("td");
+            tdLocationValue.innerHTML = "{{ row.location }}";
+            var tdRatingValue = document.createElement("td");
+            tdRatingValue.innerHTML = "{{ row.rating }}";
+
+            trValue.appendChild(tdLicenseValue);
+            trValue.appendChild(tdColorValue);
+            trValue.appendChild(tdModelValue);
+            trValue.appendChild(tdMakeValue);
+            trValue.appendChild(tdLongLatValue);
+            trValue.appendChild(tdLocationValue);
+            trValue.appendChild(tdRatingValue);
+
+            t.appendChild(trValue);
+
+            var forEnd = document.createElement("python");
+            forEnd = "{% endfor %}";
+            t.append(forEnd);
+
+            divLoginForm.appendChild(f);
+            divLoginForm.appendChild(t);
+            divLoginBox.appendChild(divLoginForm);
+
+            document.getElementsByClassName('container')[0].appendChild(divRow);
         }
 
         function openDeleteForm() {
-            document.getElementById("myDeleteForm").style.display = "block";
+            const form = document.getElementsByClassName('container')[0];
+            removeChild(form);
+
+            var divRow = document.createElement("div");
+            divRow.setAttribute('class', "row");
+
+            var divAlign = document.createElement("div");
+            divAlign.setAttribute('class', "col-lg-3 col-md-2");
+
+            var divLoginBox = document.createElement("div");
+            divLoginBox.setAttribute('class', "col-lg-6 col-md-8 form-box");
+
+            var divTitle = document.createElement("div");
+            divTitle.setAttribute('class', "col-lg-12 login-title");
+            divTitle.innerHTML = "Delete Car";
+
+            var divLoginForm = document.createElement("div");
+            divLoginForm.setAttribute('class', "col-lg-12 login-form");
+
+            divRow.appendChild(divAlign);
+            divRow.appendChild(divLoginBox);
+            divLoginBox.appendChild(divTitle);
+
+            var f = document.createElement("form");
+            f.setAttribute('method', "DELETE");
+            f.setAttribute('action', "{{ url_for('carmanage') }}");
+
+            var selectLicenseInput = document.createElement("input");
+            selectLicenseInput.setAttribute('type', "text");
+            selectLicenseInput.setAttribute('name', "license");
+            selectLicenseInput.setAttribute('placeholder', "Please input license");
+
+            var invisibleLabel = document.createElement("label");
+            invisibleLabel.setAttribute('name', "delete");
+            invisibleLabel.setAttribute('value', "delete");
+            invisibleLabel.setAttribute('style', "visible: none");
+
+            var divSubmitButton = document.createElement("div");
+            divSubmitButton.setAttribute('class', "col-lg-6 login-btm login-button");
+            var submitButton = document.createElement("button");
+            submitButton.setAttribute('type', "submit");
+            submitButton.setAttribute('class', "btn btn-outline-primary")
+            submitButton.setAttribute('value', "Submit");
+            submitButton.innerText = "Submit";
+
+            f.appendChild(selectLicenseInput);
+            f.appendChild(invisibleLabel);
+            f.appendChild(submitButton);
+
+            var t = document.createElement("table");
+            var trTitle = document.createElement("tr")
+
+            var tdLicense = document.createElement("td");
+            tdLicense.innerHTML = "License";
+            trTitle.appendChild(tdLicense);
+            var tdColor = document.createElement("td");
+            tdColor.innerHTML = "Color";
+            trTitle.appendChild(tdColor);
+            var tdModel = document.createElement("td");
+            tdModel.innerHTML = "Model";
+            trTitle.appendChild(tdModel);
+            var tdMake = document.createElement("td");
+            tdMake.innerHTML = "Make";
+            trTitle.appendChild(tdMake);
+            var tdLongLat = document.createElement("td");
+            tdLongLat.innerHTML = "Longlat";
+            trTitle.appendChild(tdLongLat);
+            var tdLocation = document.createElement("td");
+            tdLocation.innerHTML = "Location";
+            trTitle.appendChild(tdLocation);
+            var tdRating = document.createElement("td");
+            tdRating.innerHTML = "Rating";
+            trTitle.appendChild(tdRating);
+            t.appendChild(trTitle);
+
+            var forStart = document.createElement("python");
+            forStart = "{% for row in car %}";
+            t.append(forStart);
+
+            var trValue = document.createElement("tr");
+            var tdLicenseValue = document.createElement("td");
+            tdLicenseValue.innerHTML = "{{ row.license }}";
+            var tdColorValue = document.createElement("td");
+            tdColorValue.innerHTML = "{{ row.color }}";
+            var tdModelValue = document.createElement("td");
+            tdModelValue.innerHTML = "{{ row.model }}";
+            var tdMakeValue = document.createElement("td");
+            tdMakeValue.innerHTML = "{{ row.make }}";
+            var tdLongLatValue = document.createElement("td");
+            tdLongLatValue.innerHTML = "{{ row.longlat }}";
+            var tdLocationValue = document.createElement("td");
+            tdLocationValue.innerHTML = "{{ row.location }}";
+            var tdRatingValue = document.createElement("td");
+            tdRatingValue.innerHTML = "{{ row.rating }}";
+
+            trValue.appendChild(tdLicenseValue);
+            trValue.appendChild(tdColorValue);
+            trValue.appendChild(tdModelValue);
+            trValue.appendChild(tdMakeValue);
+            trValue.appendChild(tdLongLatValue);
+            trValue.appendChild(tdLocationValue);
+            trValue.appendChild(tdRatingValue);
+
+            t.appendChild(trValue);
+
+            var forEnd = document.createElement("python");
+            forEnd = "{% endfor %}";
+            t.append(forEnd);
+
+            divLoginForm.appendChild(f);
+            divLoginForm.appendChild(t);
+            divLoginBox.appendChild(divLoginForm);
+
+            document.getElementsByClassName('container')[0].appendChild(divRow);
         }
 
-        function closeForm() {
-            document.getElementsByClassName("col-lg-12 login-form").style.display = "none";
-        }
     </script>
 </body>
 
