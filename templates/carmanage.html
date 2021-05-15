@@ -454,7 +454,7 @@
             divLoginBox.appendChild(divTitle);
 
             var f = document.createElement("form");
-            f.setAttribute('method', "DELETE");
+            f.setAttribute('method', "POST");
             f.setAttribute('action', "{{ url_for('carmanage') }}");
 
             var selectLicenseInput = document.createElement("input");
@@ -462,10 +462,10 @@
             selectLicenseInput.setAttribute('name', "license");
             selectLicenseInput.setAttribute('placeholder', "Please input license");
 
-            var invisibleLabel = document.createElement("label");
+            var invisibleLabel = document.createElement("input");
             invisibleLabel.setAttribute('name', "delete");
             invisibleLabel.setAttribute('value', "delete");
-            invisibleLabel.setAttribute('style', "visible: none");
+            invisibleLabel.setAttribute('style', "display: none");
 
             var divSubmitButton = document.createElement("div");
             divSubmitButton.setAttribute('class', "col-lg-6 login-btm login-button");

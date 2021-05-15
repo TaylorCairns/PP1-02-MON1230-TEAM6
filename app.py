@@ -11,7 +11,6 @@ app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = 'genrental'
 app.config['MYSQL_DB'] = 'genrentaldb'
 
-
 mysql = MySQL(app)
 
 
@@ -283,11 +282,10 @@ def carmanage():
 
     if request.method == 'POST' and 'license' in request.form and 'delete' in request.form:
         license = request.form['license']
-
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
 
         sql = "DELETE FROM cars WHERE license = %s"
-        val = (license)
+        val = ([license])
         cursor.execute(sql, val)
         mysql.connection.commit()
 
