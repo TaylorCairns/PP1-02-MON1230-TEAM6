@@ -96,15 +96,20 @@ def rent():
         if request.method == 'GET':
             user = session['user']
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute('SELECT * FROM bookings WHERE username = %s', (session['user'],))
+            cursor.execute('SELECT * FROM bookings WHERE completed = %s AND username = %s', ('No', session['user'],))
             history = cursor.fetchall()
+            mysql.connection.commit()
+
+            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            cursor.execute('SELECT * FROM bookings WHERE completed = %s AND username = %s', ('Yes', session['user'],))
+            past = cursor.fetchall()
             mysql.connection.commit()
 
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
             cursor.execute('SELECT * FROM cars')
             cars = cursor.fetchall()
  
-            return render_template('rent.html', userType=session['type'], userHistory=history, username=user, cars=cars)
+            return render_template('rent.html', userType=session['type'], userHistory=history, username=user, cars=cars, past=past)
 
         return render_template('rent.html', userType=session['type'], username=session['username'])
         
@@ -114,14 +119,14 @@ def rent():
 
 
 
-@app.route('/booking')
+@app.route('/booking', methods=['GET', 'POST'])
 def booking():
     if 'logged' in session:
         if request.method == 'POST':
                 user = session['user']
                 date = datetime.now()
                 carLicense = request.form['carLicense']
-                #numhrs = request.form['numhrs']
+                
 
                 cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
                 cursor.execute('SELECT * FROM cars WHERE license = %s', (carLicense, ))
@@ -139,21 +144,21 @@ def booking():
                 if cars:
                     
                     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-                    cursor.execute('INSERT INTO bookings (username, license, date, hrs, completed) VALUES (%s, %s, %s, %s)', (user, carLicense, date, 'No'))
+                    cursor.execute('INSERT INTO bookings (username, license, date, completed) VALUES (%s, %s, %s, %s)', (user, carLicense, date, 'No'))
                     mysql.connection.commit()
 
-        return render_template('rent.html', userType=session['type'], userHistory=history, username=user, cars=cars)
+        return redirect(url_for('rent'))
     else:
         return redirect(url_for('login'))
 
-@app.route('/cancelBooking')
+@app.route('/cancelBooking', methods=['GET', 'POST'])
 def cancelBooking():
     if 'logged' in session:
-        if request.method == 'POST':
+        if request.method == 'POST' and 'cancelId' in request.form:
             user = session['user']
             cancelId = request.form['cancelId']
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute('SELECT * FROM bookings WHERE license = %s', (cancelId, ))
+            cursor.execute('SELECT * FROM bookings WHERE id = %s AND username = %s', (cancelId, user))
             cancelBooking = cursor.fetchone()
             mysql.connection.commit()
 
@@ -169,9 +174,12 @@ def cancelBooking():
             mysql.connection.commit()
 
             if cancelBooking:
-                cursor.execute('UPDATE bookings SET completed = %s WHERE license = %s', ('Yes', cancelId))
+                cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+                cursor.execute('UPDATE bookings SET completed = %s WHERE id = %s', ('Yes', cancelId))
+                mysql.connection.commit()
+                
 
-                return render_template('rent.html', userType=session['type'], userHistory=history, username=user, cars=cars)
+                return redirect(url_for('rent'))
             return redirect(url_for('rent'))
         return redirect(url_for('rent'))
 
