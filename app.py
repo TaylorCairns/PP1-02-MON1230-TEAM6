@@ -2,7 +2,6 @@ from flask import Flask, render_template, request, url_for, session, redirect
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
 import hashlib
-import requests
 
 app = Flask(__name__)
 app.secret_key = 'yoursecretkey'
