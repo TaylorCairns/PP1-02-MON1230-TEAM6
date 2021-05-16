@@ -1,9 +1,29 @@
 <!DOCTYPE html>
 <html>
 	<head>
+         <title>genRental</title>
         <meta charset="UTF-8">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <title>genRental</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" 
+        crossorigin="anonymous">
+
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}">
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" 
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" 
+        crossorigin="anonymous">
+      </script>
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" 
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" 
+        crossorigin="anonymous">
+      </script>
+    
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" 
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" 
+        crossorigin="anonymous">
+      </script>
+      
 
     </head>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -36,65 +56,80 @@
           </ul>
         </div>
     </nav>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+
     
     <body>
-		  <div class="Profile">
-			  <h1>UserProfile</h1>
-        <h2>Edit account</h2>
-          
-        <form action="{{ url_for('profile') }}" method="post">
-         
-          <label for="changeSection"></label>
-          <select name="changeSection" id="user">
-            <option value="firstname">first name</option>
-            <option value="lastname">last Name</option>
-            <option value="email">Email</option>
-            <option value="LicenseNo">License Number</option>
-          </select>
+		  <div class="container">
+        <div class="row">
+          <div class="col-lg-3 col-md-2"></div>
+            <div class="col-lg-6 col-md-8 login-box">
+                <div class="col-lg-12 login-key">
+                    <i class="fa fa-key" aria-hidden="true"></i>
+        </div>
+			  <div class="col-lg-12 login-title">
+          User Profile
+      </div>
+
+      <div class="col-lg-12 login-form">
+        <div class="col-lg-12 login-form">
+            <form action="{{ url_for('profile') }}" method="post">
+                <div class="form-group">
+
+                  <label class="form-control-label">USERNAME:</label>
+                  <td>{{user['username']}}</td>  
+                  
+              </div>
                 
-                
-          <label for="newValue"></label>
-          <input type="text" name="newValue" placeholder="newValue" id="newValue" required>
+
+              <div class="form-group">
+                  <label class="form-control-label">FIRSTNAME:</label>
+                 <td> {{user['firstname']}}</td>
+              </div>
+
+              <div class="form-group">
+                  <label class="form-control-label">LASTNAME:</label>
+                 <td> {{user['lastname']}}</td>
+              </div>
+
+              <div class="form-group">
+                  <label class="form-control-label">EMAIL:</label>
+                 <td>{{user['email']}}</td> 
+              </div>
+             
               
-              <div class="msg">{{ msg }}</div>
-                
-              <input type="submit" value="edit">
-        </form> 
-                <p>Your account details:</p>
-                <table>
-                    <tr>
-                        <td>Username:</td>
-                        <td>{{ user['username'] }}</td>
-                    </tr>
-                    <tr>
-                        <td>Password:</td>
-                        <td>{{ user['password'] }}</td>
-                    </tr>
-                    <tr>
-                        <td>First Name:</td>
-                        <td>{{ user['firstname'] }}</td>
-                    </tr>
-                    <tr>
-                        <td>Last Name:</td>
-                        <td>{{ user['lastname'] }}</td>
-                    </tr>
-                    <tr>
-                        <td>LicenseNo:</td>
-                        <td>{{ user['LicenseNo'] }}</td>
-                    </tr>
-                    <tr>
-                        <td>Email:</td>
-                        <td>{{ user['email'] }}</td>
-                    </tr>
-                    <tr>
-                        <td>User Type:</td>
-                        <td>{{ user['userType'] }}</td>
-                    </tr>
-                </table>
+              <div class="form-group">
+                  <label class="form-control-label">LicenseNo:</label>
+                 <td>{{user['licenseNo']}}</td>
+              </div>
+
+              <div class="form-group">
+                <label class="form-control-label">User Type:</label>
+              <td>{{user['userType']}}</td> 
             </div>
-		</div>
+
+        
+       
+              
+
+    <form action="{{ url_for('profile') }}" method="post">
+         
+      <label for="changeSection"></label>
+      <select name="changeSection" id="user">
+        <option value="firstname">first name</option>
+        <option value="lastname">last Name</option>
+        <option value="email">Email</option>
+        <option value="LicenseNo">License Number</option>
+      </select>
+            
+            
+      <label for="newValue"></label>
+      <input type="text" name="newValue" placeholder="newValue" id="newValue" required>
+          
+          <div class="msg">{{ msg }}</div>
+            
+          <input type="submit" value="edit">
+    </form> 
+
 	</body>
 </html>
