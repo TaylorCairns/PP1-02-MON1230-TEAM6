@@ -106,6 +106,8 @@ def rent():
             mysql.connection.commit()
 
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            
+
             cursor.execute('SELECT * FROM cars')
             cars = cursor.fetchall()
  
@@ -124,9 +126,9 @@ def booking():
     if 'logged' in session:
         if request.method == 'POST':
                 user = session['user']
-                date = datetime.now()
-                carLicense = request.form['carLicense']
                 
+                carLicense = request.form['carLicense']
+                date = request.form['dateandtime']
 
                 cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
                 cursor.execute('SELECT * FROM cars WHERE license = %s', (carLicense, ))
@@ -135,11 +137,8 @@ def booking():
                 cars = cursor.fetchone()
                 mysql.connection.commit()
 
-                cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-                cursor.execute('SELECT * FROM bookings WHERE username = %s', (user, ))
-
-                history = cursor.fetchall()
-                mysql.connection.commit()
+                
+            
 
                 if cars:
                     
