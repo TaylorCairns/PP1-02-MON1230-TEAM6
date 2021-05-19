@@ -85,6 +85,13 @@ def register():
 
 @app.route('/rent')
 def rent():
+    if request.method == 'GET':
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT * FROM cars')
+        car = cursor.fetchall()
+        print(car)
+        return render_template('rent.html', car=car)
+
     return render_template('rent.html')
 
 

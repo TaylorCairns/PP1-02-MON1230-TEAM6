@@ -48,4 +48,62 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
   integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
+
+<body>
+
+  <body>
+    <div class="rentCars">
+      <h1>Rent a Car</h1>
+
+      <h2>Cars</h2>
+      <div>
+        <form action="{{ url_for('rent') }}" method="post">
+          <table id="carsTable">
+            <TR>
+              <th>License</th>
+              <th>Color</th>
+              <th>Model</th>
+              <th>Longlat</th>
+              <th>Location</th>
+              <th>Rating</th>
+            </TR>
+
+            {% for row in user %}
+            <TR id="carDetailTable">
+              <TD>test</TD>
+              <TD>test</TD>
+              <TD>test</TD>
+              <TD>test</TD>
+              <TD>test</TD>
+              <TD>test</TD>
+              <td><input type="radio" class="carChoosing">Choose this one</button></td>
+            </TR>
+            {% endfor %}
+          </table>
+          <div>
+            <button>Submit My Selection</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+
+    <!-- <script>
+      function addRentButton() {
+        var divRentButton = document.createElement('div');
+
+        var rentButton = document.createElement('button');
+        rentButton.innerHTML = "Rent this one";
+        divRentButton.appendChild(rentButton);
+
+        document.getElementsById('carDetailTable')[0].appendChild(divRentButton);
+      }
+
+      function showPopUp() {
+        var p = document.createElement('prompt');
+
+      }
+    </script> -->
+  </body>
+
 </html>
