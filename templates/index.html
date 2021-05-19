@@ -2,14 +2,24 @@
 <html>
 
 <head>
-<title>Login</title>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<!--<link id="testcss" type="text/css" rel="stylesheet" href="css\template.css">-->
-<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/style.css') }}">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}">
 </head>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+<meta name="google-signin-scope" content="profile email">
+<meta name="google-signin-client_id" content="31065433515-rrr62qf8qf0n6dnart0ab59aiuspom8n.apps.googleusercontent.com">
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+
 <body>
     <div class="container">
         <div class="row">
@@ -20,53 +30,57 @@
                 </div>
                 <div class="col-lg-12 login-title">
                     LOGIN
-                </div>
 
-                <div class="col-lg-12 login-form">
                     <div class="col-lg-12 login-form">
-                        <form action="{{ url_for('login') }}" method="post">
-                            <div class="form-group">
-                                <label class="form-control-label">USERNAME</label>
-                                <input type="text" class="form-control" name="username" id="username">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-control-label">PASSWORD</label>
-                                <input type="password" class="form-control" i name="password" id="password">
-                            </div>
+                        <div class="col-lg-12 login-form">
+                            <form>
+                                <form action="{{ url_for('login') }}" method="post">
+                                    <div class="form-group">
+                                        <label class="form-control-label">USERNAME</label>
+                                        <input type="text" class="form-control" name="username" id="username">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-control-label">PASSWORD</label>
+                                        <input type="password" class="form-control" i name="password" id="password">
+                                    </div>
 
-                            <div class="col-lg-12 loginbttm">
-                                <div class="col-lg-6 login-btm login-text">
-                                    <!-- Error Message -->
-                                </div>
-                                <div class="col-lg-6 login-btm login-button">
-                                    <button type="submit" class="btn btn-outline-primary">LOGIN</button>
-                                </div>
-                            </div>
+                                    <div class="col-lg-12 loginbttm">
+                                        <div class="col-lg-12 loginbttm">
+                                            <div class="col-lg-6 login-btm login-text">
+                                                <!-- Error Message -->
+                                            </div>
+                                            <div class="col-lg-6 login-btm login-button">
+                                                <button type="submit" class="btn btn-outline-primary">LOGIN</button>
+                                            </div>
+                                        </div>
+                                </form>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 loginbttm">
+                        <div class="col-lg-6 login-btm login-text">
+                        </div>
+                        <div class="col-lg-6 login-btm login-button">
+                            <button class="btn btn-outline-primary"><a href="{{ url_for('register') }}">SIGN
+                                    UP</a></button>
+                        </div>
+                    </div>
+                    <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"
+                        style="float: right; margin-bottom: 25px; margin-right: 45px;"></div>
 
-                            <div class="col-lg-12 registerbttm">
-                                <div class="col-lg-6 register-btm register-text">
-                                    <!-- Error Message -->
-                                </div>
-                                <div class="col-lg-6 register-btm register-button">
-                                    <button type="submit" class="btn btn-outline-secondary" href="http://127.0.0.1:5000/register">SIGN UP</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+                    <div class="col-lg-3 col-md-2"></div>
                 </div>
-                <div class="col-lg-12 loginbttm">
-                    <div class="col-lg-6 login-btm login-text">
-                    </div>
-                    <div class="col-lg-6 login-btm login-button">
-                        <button class="btn btn-outline-primary"><a href="{{ url_for('register') }}">SIGN
-                                UP</a></button>
-                    </div>
-                </div>
-                <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"
-                    style="float: right; margin-bottom: 25px; margin-right: 45px;"></div>
-                <div class="col-lg-3 col-md-2"></div>
             </div>
-        </div>
+
+            <script>
+                function onSignIn(googleUser) {
+                    var profile = googleUser.getBasicProfile();
+                    console.log(profile);
+                    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+                    console.log('Name: ' + profile.getName());
+                    console.log('Image URL: ' + profile.getImageUrl());
+                    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+                }
+            </script>
 </body>
 
 </html>
