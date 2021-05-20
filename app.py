@@ -107,7 +107,6 @@ def rent():
 
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
             
-
             cursor.execute('SELECT * FROM cars')
             cars = cursor.fetchall()
  
@@ -128,7 +127,8 @@ def booking():
                 user = session['user']
                 
                 carLicense = request.form['carLicense']
-                date = request.form['dateandtime']
+                date = request.form['date']
+                time = request.form['time']
 
                 cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
                 cursor.execute('SELECT * FROM cars WHERE license = %s', (carLicense, ))
@@ -143,7 +143,7 @@ def booking():
                 if cars:
                     
                     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-                    cursor.execute('INSERT INTO bookings (username, license, date, completed) VALUES (%s, %s, %s, %s)', (user, carLicense, date, 'No'))
+                    cursor.execute('INSERT INTO bookings (username, license, date, completed, time) VALUES (%s, %s, %s, %s, %s)', (user, carLicense, date, 'No', time))
                     mysql.connection.commit()
 
         return redirect(url_for('rent'))

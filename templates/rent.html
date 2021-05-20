@@ -45,15 +45,19 @@
         <i class="fas fa-user"></i>
       </label>
       <input type="text" name="carLicense" placeholder="Enter Car License" id="carLicense" required>
-      <label for="Date & Time">
+      <label for="Date">
         <i class="fas fa-user"></i>
       </label>
-      <input type="datetime-local" id="dateandtime" placeholder="Example 2018-06-12T18-23" name="dateandtime" required> 
+      <input type="datetime-local" id="dateandtime" placeholder="Example 2018-06-12" name="date" required> 
+      <label for="Time">
+        <i class="fas fa-user"></i>
+      </label>
+      <input type="datetime-local" id="dateandtime" placeholder="Example 18-23" name="time" required>
   
       <input type="submit" value="Book">
     </form>
     
-    <h2>Cancel Booking</h2>
+    <h2>Cance/End Booking</h2>
     
     <form action="{{ url_for('cancelBooking') }}" method="post">
       <label for="cancelId">
@@ -72,6 +76,7 @@
           <TH>Username</TH>
           <TH>License</TH>
           <TH>Date</TH>
+          <TH>Time</TH>
   
         </TR>
         
@@ -81,6 +86,7 @@
           <TD>{{row.username}}</TD>
           <TD>{{row.license}}</TD>
           <TD>{{row.date}}</TD>
+          <TD>{{row.time}}</TD>
         </TR>
         {% endfor %}
         </table>
@@ -118,6 +124,7 @@
           <TH>Username</TH>
           <TH>License</TH>
           <TH>Date</TH>
+          <TH>Time</TH>
   
         </TR>
         
@@ -127,6 +134,7 @@
           <TD>{{row.username}}</TD>
           <TD>{{row.license}}</TD>
           <TD>{{row.date}}</TD>
+          <TD>{{row.time}}</TD>
         </TR>
         {% endfor %}
         </table>
