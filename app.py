@@ -89,7 +89,8 @@ def rent():
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM cars')
         car = cursor.fetchall()
-        print(car)
+        session
+
         return render_template('rent.html', car=car)
 
     return render_template('rent.html')
@@ -97,10 +98,10 @@ def rent():
 
 @app.route('/logout')
 def logout():
-    session.pop('logged', none)
-    session.pop('username', none)
-    session.pop('userType', none)
-    session.pop('firstname', none)
+    session.pop('logged', None)
+    session.pop('username', None)
+    session.pop('userType', None)
+    session.pop('firstname', None)
 
     return redirect(url_for('login'))
 
@@ -200,6 +201,11 @@ def edituser():
 @app.route('/map')
 def map():
     return render_template('map.html')
+
+
+@app.route('/policy')
+def policy():
+    return render_template('policy.html')
 
 
 @app.route('/carmanage', methods=['GET', 'POST', 'DELETE'])
