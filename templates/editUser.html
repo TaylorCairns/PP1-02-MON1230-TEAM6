@@ -2,14 +2,53 @@
 <html>
 
 <head>
-<title>Edit User</title>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<!--<link id="testcss" type="text/css" rel="stylesheet" href="css\template.css">-->
-<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/style.css') }}">
+    <title>Edit User</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!--<link id="testcss" type="text/css" rel="stylesheet" href="css\template.css">-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}">
 </head>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class=" navbar-brand" href="#"></a>
+    <img src="https://i.ibb.co/YZh1fvQ/sN89ncS.png" alt="logo" style="width:50px;height:50px;">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div id="customerNavBar">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('rent') }}">Rent</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('profile') }}">Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('edituser') }}">Edit User</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('carmanage') }}">Car Manage</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('policy') }}">Policy</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('logout') }}">Log Out</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
 <body>
     <div class="container">
         <div class="row">
@@ -21,94 +60,94 @@
                 <div class="col-lg-12 login-title">
                     EDIT USER
                 </div>
-                
-                
+
+
 
                 <div class="col-lg-12 login-form">
                     <div class="col-lg-12 login-form">
                         <form action="{{ url_for('login') }}" method="post">
                             <div class="form-group">
                                 <label class="form-control-label">EDIT</label>
-                            
-                            <div class="select">
-                                <select id="standard-select">
-                                    <option value="firstname">First name</option>
-                                    <option value="lastname">Last Name</option>
-                                    <option value="userType">User Type</option>
-                                    <option value="LicenseNo">License Number</option>
-                                </select>
-                            </div>
-                            <br>
-                            <br>
 
-                            <div class="form-group">
-                                <label class="form-control-label">USERNAME</label>
-                                <input type="text" class="form-control" name="username" id="username">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-control-label">NEW VALUE</label>
-                                <input type="password" class="form-control" i name="password" id="password">
-                            </div>
-
-                            <div class="col-lg-12 loginbttm">
-                                <div class="col-lg-6 login-btm login-text">
-                                    <!-- Error Message -->
+                                <div class="select">
+                                    <select id="standard-select">
+                                        <option value="firstname">First name</option>
+                                        <option value="lastname">Last Name</option>
+                                        <option value="userType">User Type</option>
+                                        <option value="LicenseNo">License Number</option>
+                                    </select>
                                 </div>
-                                <div class="col-lg-6 login-btm login-button">
-                                    <button type="submit" class="btn btn-outline-primary">CHANGE</button>
+                                <br>
+                                <br>
+
+                                <div class="form-group">
+                                    <label class="form-control-label">USERNAME</label>
+                                    <input type="text" class="form-control" name="username" id="username">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label">NEW VALUE</label>
+                                    <input type="password" class="form-control" i name="password" id="password">
+                                </div>
+
+                                <div class="col-lg-12 loginbttm">
+                                    <div class="col-lg-6 login-btm login-text">
+                                        <!-- Error Message -->
+                                    </div>
+                                    <div class="col-lg-6 login-btm login-button">
+                                        <button type="submit" class="btn btn-outline-primary">CHANGE</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                            
+
                         </form>
                     </div>
                 </div>
 
             </div>
-            
-            
-            
+
+
+
         </div>
     </div>
 
     <div class="container">
         <div class="row">
             <div class="col-lg-3 col-md-2"></div>
-            
+
             <div class="col-lg-6 col-md-8 table-box">
 
-                
-                    <div class="table-form" style="overflow-x:auto;">
-                        <table id="userTable">
-                            <TR>
-                                <TH>Username</TH>
-                                <TH>First Name</TH>
-                                <TH>Last Name</TH>
-                                <TH>Email</TH>
-                                <TH>License Number</TH>
-                                <TH>User Type</TH>
-                            </TR>
-        
-                            {% for row in user %}
-                            <TR>
-                                <TD>{{row.username}}</TD>
-                                <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">{{row.firstname}}</TD>
-                                <TD>{{row.lastname}}</TD>
-                                <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">{{row.email}}</TD>
-                                <TD>{{row.licenseNo}}</TD>
-                                <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">{{row.userType}}</TD>
-                            </TR>
-                            {% endfor %}
-                        </table>
-                    </div>
-                
+
+                <div class="table-form" style="overflow-x:auto;">
+                    <table id="userTable">
+                        <TR>
+                            <TH>Username</TH>
+                            <TH>First Name</TH>
+                            <TH>Last Name</TH>
+                            <TH>Email</TH>
+                            <TH>License Number</TH>
+                            <TH>User Type</TH>
+                        </TR>
+
+                        {% for row in user %}
+                        <TR>
+                            <TD>{{row.username}}</TD>
+                            <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">{{row.firstname}}</TD>
+                            <TD>{{row.lastname}}</TD>
+                            <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">{{row.email}}</TD>
+                            <TD>{{row.licenseNo}}</TD>
+                            <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">{{row.userType}}</TD>
+                        </TR>
+                        {% endfor %}
+                    </table>
+                </div>
+
             </div>
-            
+
         </div>
     </div>
 
-        
+
 </body>
 
 </html>
