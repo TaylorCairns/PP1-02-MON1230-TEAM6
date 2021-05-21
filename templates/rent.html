@@ -1,20 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
+  
+    <head>
+      
+        <title style="text-align:center; color: #FFFFFF">genRental</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
 
-<head>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <title>genRental</title>
-</head>
+          <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}">
+   
+   
+          <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" 
+          integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" 
+          crossorigin="anonymous">
+        </script>
+      
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" 
+          integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" 
+          crossorigin="anonymous">
+        </script>
+      
+          <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" 
+          integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" 
+          crossorigin="anonymous">
+        </script>
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-  integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-  integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-  integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
+
+
+      </head>
 
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -47,60 +63,198 @@
       </ul>
     </div>
   </nav>
-  <div class="rentCars">
-    <h1>Rent a Car</h1>
-
-    <h2>Cars</h2>
-    <div>
-      <form action="{{ url_for('rent') }}" method="post">
-        <table id="carsTable">
-          <TR>
-            <th>License</th>
-            <th>Color</th>
-            <th>Model</th>
-            <th>Longlat</th>
-            <th>Location</th>
-            <th>Rating</th>
-          </TR>
-
-          {% for row in user %}
-          <TR id="carDetailTable">
-            <TD>test</TD>
-            <TD>test</TD>
-            <TD>test</TD>
-            <TD>test</TD>
-            <TD>test</TD>
-            <TD>test</TD>
-            <td><input type="button" class="carChoosing" onclick="customerNavBarDisplay()">Choose this one</button>
-            </td>
-          </TR>
-          {% endfor %}
-        </table>
-        <div>
-          <button onclick="customerNavBarDisplay()">Submit My Selection</button>
-        </div>
-      </form>
-      <div>
-        <button onclick="customerNavBarDisplay()">test</button>
-      </div>
-    </div>
-
   </div>
-  <script>
-    function customerNavBarDisplay() {
-      var test = sessionStorage.getItem("type");
-      console.log(test);
-      if (test == "customer") {
-        document.getElementById("managerNavBar").style.display = "none";
-      }
-      else {
-        document.getElementById("customerNavBar").setAttribute("style", "display:none")
-      }
-    }
-
-  </script>
 
 </body>
 
+
+
+
+    
+
+    <h2 style="text-align:center; color: #FFFFFF">Bookings</h2>
+    
+    <h2 style="text-align:center; color: #FFFFFF"> Create Booking</h2>
+
+    
+
+    <form style="text-align:center;" action="{{ url_for('booking') }}" method="post">
+      <label for="carLicense">
+        <i class="fas fa-user"></i>
+      </label>
+      <input class="center" type="text" name="carLicense" placeholder="Enter Car License" id="carLicense" required>
+      <label for="Date">
+        <i class="fas fa-user"></i>
+      </label>
+      <input type="text" id="dateandtime" placeholder="Example 2018-06-12" name="date" required> 
+      <label for="Time">
+        <i class="fas fa-user"></i>
+      </label>
+      <input type="text" id="dateandtime" placeholder="Example 18-23" name="time" required>
+  
+      <input type="submit" value="Book">
+    </form>
+    
+    <h2 style="text-align:center; color: #FFFFFF">Cance/End Booking</h2>
+    
+    <form style="text-align:center;" action="{{ url_for('cancelBooking') }}" method="post">
+      <label for="cancelId">
+        <i class="fas fa-user"></i>
+      </label>
+      <input type="text" name="cancelId" placeholder="Booking Id" id="cancelId" required>
+  
+      <input type="submit" value="Cancel Booking">
+    </form>
+
+
+
+<!-- Functions that I should not touch-->
+
+
+
+
+
+
+
+    <h2 style="text-align:center; color: #FFFFFF">Bookings</h2>
+
+    <div class="container">
+      <div class="row">
+          <div class="col-lg-1 col-md-1"></div>
+          
+          <div class="col-lg-1 col-md-4 table-box"></div>
+          <div class="table-form" style="overflow-x:auto;"></div>
+   
+      <table id="userTable">
+        <TR>
+          <TH style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">Booking Id</TH>
+          <TH style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">Username</TH>
+          <TH style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">License</TH>
+          <TH style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">Date</TH>
+          <TH style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">Time</TH>
+  
+        </TR>
+        
+        {% for row in userHistory %}
+        <TR >
+         
+          <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF" style="text-align:center;">{{row.id}}</TD>
+          
+          <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF" style="text-align:center;">{{row.username}}</TD>
+          
+          <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF" style="text-align:center;">{{row.license}}</TD>
+         
+          <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF" style="text-align:center;">{{row.date}}</TD>
+          
+          <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF" style="text-align:center;">{{row.time}}</TD>
+        </TR>
+        {% endfor %}
+        </table>
+    </div>
+
+
+          </div>
+    
+
+
+
+    <h2 style="text-align:center; color: #FFFFFF">Available Cars</h2>
+    <div class="container">
+      <div class="row">
+          <div class="col-lg-1 col-md-1"></div>
+          
+          <div class="col-lg-1 col-md-4 table-box"></div>
+      
+          <div class="table-form" style="overflow-x:auto;">
+          <table id="carTable">
+                <!--Google maps API -->
+          {% set url_string = "https://maps.googleapis.com/maps/api/staticmap?center=Melbourne+Vic&zoom=10&size=600x300&maptype=roadmap" + my_string + "&key=AIzaSyAjvuMpnUNsbvA0c0tT9QaLJOTm6lmM0Tk" %}
+
+          <p>
+            <img src= {{url_string}}>
+          </p>
+        <TR>
+          
+          <TH style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">License</TH>
+          <TH style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">Make</TH>
+          <TH style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">Model</TH>
+          <TH style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">Colour</TH>
+          <TH style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">Rating</TH>
+          <TH style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">Location</TH>
+        </TR>
+        
+        {% for row in cars %}
+        <TR>
+          
+          <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">{{row.license}}</TD>
+          
+          <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">{{row.make}}</TD>
+          
+          <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">{{row.model}}</TD>
+         
+          <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">{{row.color}}</TD>
+          
+          <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">{{row.rating}}</TD>
+         
+          <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">{{row.location}}</TD>
+
+    
+
+
+
+        </TR>
+        {% endfor %}
+        
+        </table>
+
+        
+    </div>
+
+    </div>
+
+
+
+
+    <h2 style="text-align:center; color: #FFFFFF">Past Bookings</h2>
+    <div class="container">
+      <div class="row">
+          <div class="col-lg-1 col-md-1"></div>
+          
+          <div class="col-lg-1 col-md-4 table-box"></div>
+     
+          <div class="table-form" style="overflow-x:auto;"></div>
+     
+          <table id="pastTable">
+
+
+        <TR>
+          <TH style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">Booking Id</TH>
+          <TH style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">Username</TH>
+          <TH style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">License</TH>
+          <TH style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">Date</TH>
+          <TH style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">Time</TH>
+  
+        </TR>
+        
+        {% for row in past %}
+        <TR>
+         
+          <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">{{row.id}}</TD>
+          
+          <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">{{row.username}}</TD>
+          
+          <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">{{row.license}}</TD>
+          
+          <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">{{row.date}}</TD>
+          
+          <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">{{row.time}}</TD>
+        </TR>
+        {% endfor %}
+        </table>
+    </div>
+
+    </div>
+
+    
 
 </html>

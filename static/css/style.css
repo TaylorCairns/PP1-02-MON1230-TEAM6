@@ -12,6 +12,8 @@ html, body {
 }
 
 
+@media all and (max-width: 768px) {
+
 .login-key {
     height: max-height;
     font-size: 80px;
@@ -19,6 +21,10 @@ html, body {
     background: -webkit-linear-gradient(#27EF9F, rgb(11, 110, 133));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+}
+
+
+
 }
 
 
@@ -30,6 +36,7 @@ html, body {
     margin-top: 15px;
     font-weight: bold;
     color: #FFFFFF;
+
 }
 
 .login-form {
@@ -128,6 +135,7 @@ label {
     padding: 0px;
 }
 
+
 /*Dropdown box*/
 *,
 *::before,
@@ -186,3 +194,14 @@ select::-ms-expand {
     background: rgb(11, 110, 133);
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
+
+
+table {
+   
+    border-spacing: 0 15px;
+  }
+
+  td {
+      width: 150px;
+  }
+
