@@ -1,10 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+      
+        <title style="text-align:center; color: #FFFFFF">genRental</title>
         <meta charset="UTF-8">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <title>genRental</title>
-    </head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+
+          <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}">
+   
+   
+          <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" 
+          integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" 
+          crossorigin="anonymous">
+        </script>
+      
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" 
+          integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" 
+          crossorigin="anonymous">
+        </script>
+      
+          <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" 
+          integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" 
+          crossorigin="anonymous">
+        </script>
+
+
+
+
+      </head>
+
+
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#"></a>
         <img src="https://i.ibb.co/YZh1fvQ/sN89ncS.png" alt="logo" style="width:50px;height:50px;">
@@ -36,15 +63,16 @@
         </div>
     </nav>
     
-    <h2>Bookings</h2>
+    <h2 style="text-align:center; color: #FFFFFF">Bookings</h2>
     
-    <h2> Create Booking</h2>
+    <h2 style="text-align:center; color: #FFFFFF"> Create Booking</h2>
     
-    <form action="{{ url_for('booking') }}" method="post">
+
+    <form style="text-align:center;" action="{{ url_for('booking') }}" method="post">
       <label for="carLicense">
         <i class="fas fa-user"></i>
       </label>
-      <input type="text" name="carLicense" placeholder="Enter Car License" id="carLicense" required>
+      <input class="center" type="text" name="carLicense" placeholder="Enter Car License" id="carLicense" required>
       <label for="Date">
         <i class="fas fa-user"></i>
       </label>
@@ -57,9 +85,9 @@
       <input type="submit" value="Book">
     </form>
     
-    <h2>Cance/End Booking</h2>
+    <h2 style="text-align:center; color: #FFFFFF">Cance/End Booking</h2>
     
-    <form action="{{ url_for('cancelBooking') }}" method="post">
+    <form style="text-align:center;" action="{{ url_for('cancelBooking') }}" method="post">
       <label for="cancelId">
         <i class="fas fa-user"></i>
       </label>
@@ -68,78 +96,137 @@
       <input type="submit" value="Cancel Booking">
     </form>
 
-    <h2>Bookings</h2>
-    <div>
+
+
+<!-- Functions that I should not touch-->
+
+
+
+
+
+
+
+    <h2 style="text-align:center; color: #FFFFFF">Bookings</h2>
+
+    <div class="container">
+      <div class="row">
+          <div class="col-lg-1 col-md-1"></div>
+          
+          <div class="col-lg-1 col-md-4 table-box"></div>
+          <div class="table-form" style="overflow-x:auto;"></div>
+   
       <table id="userTable">
         <TR>
-          <TH>Booking Id</TH>
-          <TH>Username</TH>
-          <TH>License</TH>
-          <TH>Date</TH>
-          <TH>Time</TH>
+          <TH style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">Booking Id</TH>
+          <TH style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">Username</TH>
+          <TH style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">License</TH>
+          <TH style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">Date</TH>
+          <TH style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">Time</TH>
   
         </TR>
         
         {% for row in userHistory %}
-        <TR>
-          <TD>{{row.id}}</TD>
-          <TD>{{row.username}}</TD>
-          <TD>{{row.license}}</TD>
-          <TD>{{row.date}}</TD>
-          <TD>{{row.time}}</TD>
+        <TR >
+         
+          <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF" style="text-align:center;">{{row.id}}</TD>
+          
+          <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF" style="text-align:center;">{{row.username}}</TD>
+          
+          <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF" style="text-align:center;">{{row.license}}</TD>
+         
+          <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF" style="text-align:center;">{{row.date}}</TD>
+          
+          <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF" style="text-align:center;">{{row.time}}</TD>
         </TR>
         {% endfor %}
         </table>
     </div>
-    <h2>Available Cars</h2>
-    <div>
-      <table id="carTable">
+
+          </div>
+    
+
+
+
+    <h2 style="text-align:center; color: #FFFFFF">Available Cars</h2>
+    <div class="container">
+      <div class="row">
+          <div class="col-lg-1 col-md-1"></div>
+          
+          <div class="col-lg-1 col-md-4 table-box"></div>
+      
+          <div class="table-form" style="overflow-x:auto;">
+          <table id="carTable">
         <TR>
           
-          <TH>License</TH>
-          <TH>Make</TH>
-          <TH>Model</TH>
-          <TH>Colour</TH>
-          <TH>Rating</TH>
-          <TH>Location</TH>
+          <TH style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">License</TH>
+          <TH style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">Make</TH>
+          <TH style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">Model</TH>
+          <TH style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">Colour</TH>
+          <TH style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">Rating</TH>
+          <TH style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">Location</TH>
         </TR>
         
         {% for row in cars %}
         <TR>
-          <TD>{{row.license}}</TD>
-          <TD>{{row.make}}</TD>
-          <TD>{{row.model}}</TD>
-          <TD>{{row.color}}</TD>
-          <TD>{{row.rating}}</TD>
-          <TD>{{row.location}}</TD>
+          
+          <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">{{row.license}}</TD>
+          
+          <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">{{row.make}}</TD>
+          
+          <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">{{row.model}}</TD>
+         
+          <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">{{row.color}}</TD>
+          
+          <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">{{row.rating}}</TD>
+         
+          <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">{{row.location}}</TD>
         </TR>
         {% endfor %}
         </table>
     </div>
-    <h2>Past Bookings</h2>
-    <div>
-      <table id="pastTable">
+
+    </div>
+
+
+    <h2 style="text-align:center; color: #FFFFFF">Past Bookings</h2>
+    <div class="container">
+      <div class="row">
+          <div class="col-lg-1 col-md-1"></div>
+          
+          <div class="col-lg-1 col-md-4 table-box"></div>
+     
+          <div class="table-form" style="overflow-x:auto;"></div>
+     
+          <table id="pastTable">
+
+
         <TR>
-          <TH>Booking Id</TH>
-          <TH>Username</TH>
-          <TH>License</TH>
-          <TH>Date</TH>
-          <TH>Time</TH>
+          <TH style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">Booking Id</TH>
+          <TH style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">Username</TH>
+          <TH style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">License</TH>
+          <TH style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">Date</TH>
+          <TH style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">Time</TH>
   
         </TR>
         
         {% for row in past %}
         <TR>
-          <TD>{{row.id}}</TD>
-          <TD>{{row.username}}</TD>
-          <TD>{{row.license}}</TD>
-          <TD>{{row.date}}</TD>
-          <TD>{{row.time}}</TD>
+         
+          <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">{{row.id}}</TD>
+          
+          <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">{{row.username}}</TD>
+          
+          <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">{{row.license}}</TD>
+          
+          <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">{{row.date}}</TD>
+          
+          <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">{{row.time}}</TD>
         </TR>
         {% endfor %}
         </table>
     </div>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    </div>
+
+    
 </html>
