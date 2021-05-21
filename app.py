@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, url_for, session, redirect
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
 import hashlib
+from datetime import datetime, timedelta
 
 app = Flask(__name__)
 app.secret_key = 'yoursecretkey'
@@ -92,26 +93,99 @@ def register():
 def rent():
 
     if 'logged' in session:
-        if request.method == 'GET' or request.method == 'POST':
+        if request.method == 'GET':
             user = session['user']
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute('SELECT * FROM bookings WHERE username = %s', (session['user'],))
+            cursor.execute('SELECT * FROM bookings WHERE completed = %s AND username = %s', ('No', session['user'],))
             history = cursor.fetchall()
             mysql.connection.commit()
 
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            cursor.execute('SELECT * FROM bookings WHERE completed = %s AND username = %s', ('Yes', session['user'],))
+            past = cursor.fetchall()
+            mysql.connection.commit()
+
+            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            
             cursor.execute('SELECT * FROM cars')
             cars = cursor.fetchall()
-
-
-            
-            return render_template('rent.html', userType=session['type'], userHistory=history, username=user, cars=cars)
+ 
+            return render_template('rent.html', userType=session['type'], userHistory=history, username=user, cars=cars, past=past)
 
         return render_template('rent.html', userType=session['type'], username=session['username'])
         
 
             
     return redirect(url_for('login'))
+
+
+
+@app.route('/booking', methods=['GET', 'POST'])
+def booking():
+    if 'logged' in session:
+        if request.method == 'POST':
+                user = session['user']
+                
+                carLicense = request.form['carLicense']
+                date = request.form['date']
+                time = request.form['time']
+
+                cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+                cursor.execute('SELECT * FROM cars WHERE license = %s', (carLicense, ))
+
+
+                cars = cursor.fetchone()
+                mysql.connection.commit()
+
+                
+            
+
+                if cars:
+                    
+                    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+                    cursor.execute('INSERT INTO bookings (username, license, date, completed, time) VALUES (%s, %s, %s, %s, %s)', (user, carLicense, date, 'No', time))
+                    mysql.connection.commit()
+
+        return redirect(url_for('rent'))
+    else:
+        return redirect(url_for('login'))
+
+@app.route('/cancelBooking', methods=['GET', 'POST'])
+def cancelBooking():
+    if 'logged' in session:
+        if request.method == 'POST' and 'cancelId' in request.form:
+            user = session['user']
+            cancelId = request.form['cancelId']
+            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            cursor.execute('SELECT * FROM bookings WHERE id = %s AND username = %s', (cancelId, user))
+            cancelBooking = cursor.fetchone()
+            mysql.connection.commit()
+
+            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            cursor.execute('SELECT * FROM bookings WHERE username = %s', (user, ))
+
+            history = cursor.fetchall()
+            mysql.connection.commit()
+
+            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            cursor.execute('SELECT * FROM cars')
+            cars = cursor.fetchall()
+            mysql.connection.commit()
+
+            if cancelBooking:
+                cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+                cursor.execute('UPDATE bookings SET completed = %s WHERE id = %s', ('Yes', cancelId))
+                mysql.connection.commit()
+                
+
+                return redirect(url_for('rent'))
+            return redirect(url_for('rent'))
+        return redirect(url_for('rent'))
+
+
+
+    else:
+        return redirect(url_for('login'))
 
 
 @app.route('/logout')
@@ -163,6 +237,7 @@ def profile():
             return render_template('profile.html', typeOfUser=session['type'], user=user)
       
         return render_template('profile.html', typeOfUser=session['type'], user=user)
+
 
     return redirect(url_for('login'))
 

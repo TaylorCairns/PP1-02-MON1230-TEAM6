@@ -35,21 +35,58 @@
           </ul>
         </div>
     </nav>
+    
+    <h2>Bookings</h2>
+    
+    <h2> Create Booking</h2>
+    
+    <form action="{{ url_for('booking') }}" method="post">
+      <label for="carLicense">
+        <i class="fas fa-user"></i>
+      </label>
+      <input type="text" name="carLicense" placeholder="Enter Car License" id="carLicense" required>
+      <label for="Date">
+        <i class="fas fa-user"></i>
+      </label>
+      <input type="text" id="dateandtime" placeholder="Example 2018-06-12" name="date" required> 
+      <label for="Time">
+        <i class="fas fa-user"></i>
+      </label>
+      <input type="text" id="dateandtime" placeholder="Example 18-23" name="time" required>
+  
+      <input type="submit" value="Book">
+    </form>
+    
+    <h2>Cance/End Booking</h2>
+    
+    <form action="{{ url_for('cancelBooking') }}" method="post">
+      <label for="cancelId">
+        <i class="fas fa-user"></i>
+      </label>
+      <input type="text" name="cancelId" placeholder="Booking Id" id="cancelId" required>
+  
+      <input type="submit" value="Cancel Booking">
+    </form>
+
     <h2>Bookings</h2>
     <div>
       <table id="userTable">
         <TR>
+          <TH>Booking Id</TH>
           <TH>Username</TH>
           <TH>License</TH>
           <TH>Date</TH>
+          <TH>Time</TH>
   
         </TR>
         
         {% for row in userHistory %}
         <TR>
+          <TD>{{row.id}}</TD>
           <TD>{{row.username}}</TD>
           <TD>{{row.license}}</TD>
           <TD>{{row.date}}</TD>
+          <TD>{{row.time}}</TD>
         </TR>
         {% endfor %}
         </table>
@@ -75,6 +112,29 @@
           <TD>{{row.color}}</TD>
           <TD>{{row.rating}}</TD>
           <TD>{{row.location}}</TD>
+        </TR>
+        {% endfor %}
+        </table>
+    </div>
+    <h2>Past Bookings</h2>
+    <div>
+      <table id="pastTable">
+        <TR>
+          <TH>Booking Id</TH>
+          <TH>Username</TH>
+          <TH>License</TH>
+          <TH>Date</TH>
+          <TH>Time</TH>
+  
+        </TR>
+        
+        {% for row in past %}
+        <TR>
+          <TD>{{row.id}}</TD>
+          <TD>{{row.username}}</TD>
+          <TD>{{row.license}}</TD>
+          <TD>{{row.date}}</TD>
+          <TD>{{row.time}}</TD>
         </TR>
         {% endfor %}
         </table>
