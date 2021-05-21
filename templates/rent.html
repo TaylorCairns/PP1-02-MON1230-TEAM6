@@ -63,9 +63,11 @@
         </div>
     </nav>
     
+
     <h2 style="text-align:center; color: #FFFFFF">Bookings</h2>
     
     <h2 style="text-align:center; color: #FFFFFF"> Create Booking</h2>
+
     
 
     <form style="text-align:center;" action="{{ url_for('booking') }}" method="post">
@@ -142,6 +144,7 @@
         </table>
     </div>
 
+
           </div>
     
 
@@ -180,6 +183,16 @@
           <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">{{row.rating}}</TD>
          
           <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">{{row.location}}</TD>
+
+    
+    <!--Google maps API -->
+    {% set url_string = "https://maps.googleapis.com/maps/api/staticmap?center=Melbourne+Vic&zoom=10&size=600x300&maptype=roadmap" + my_string + "&key=AIzaSyAjvuMpnUNsbvA0c0tT9QaLJOTm6lmM0Tk" %}
+
+    <p>
+      <img src= {{url_string}}>
+    </p>
+
+
         </TR>
         {% endfor %}
         </table>
