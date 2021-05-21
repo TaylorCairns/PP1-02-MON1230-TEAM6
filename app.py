@@ -242,6 +242,13 @@ def profile():
     return redirect(url_for('login'))
 
 
+@app.route('/policy')
+def policy():
+    
+
+    return render_template('policy.html')
+
+
 @app.route('/edituser', methods=['GET', 'POST'])
 def edituser():   
 
@@ -285,3 +292,4 @@ def edituser():
 
         
     return render_template('editUser.html')   
+
