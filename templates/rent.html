@@ -37,7 +37,7 @@
     </nav>
     
     <h2>Bookings</h2>
-    
+
     <h2> Create Booking</h2>
     
     <form action="{{ url_for('booking') }}" method="post">
@@ -81,11 +81,20 @@
         {% endfor %}
         </table>
     </div>
+    
+    <!--Google maps API -->
+    {% set url_string = "https://maps.googleapis.com/maps/api/staticmap?center=Melbourne+Vic&zoom=10&size=600x300&maptype=roadmap" + my_string + "&key=AIzaSyAjvuMpnUNsbvA0c0tT9QaLJOTm6lmM0Tk" %}
+
+    <p>
+      <img src= {{url_string}}>
+    </p>
+
+
     <h2>Available Cars</h2>
     <div>
       <table id="carTable">
         <TR>
-          
+          <TH>Car ID</TH>
           <TH>License</TH>
           <TH>Make</TH>
           <TH>Model</TH>
@@ -95,7 +104,8 @@
         </TR>
         
         {% for row in cars %}
-        <TR>
+        <TR> 
+          <TD>{{row.carId}}</TD>
           <TD>{{row.license}}</TD>
           <TD>{{row.make}}</TD>
           <TD>{{row.model}}</TD>
