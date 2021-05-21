@@ -124,7 +124,7 @@ def rent():
 
 
  
-            return render_template('rent.html', userType=session['type'], userHistory=history, username=user, car=cars, past=past, my_string=my_string)
+            return render_template('rent.html', userType=session['type'], userHistory=history, username=user, cars=cars, past=past, my_string=my_string)
 
         return render_template('rent.html', userType=session['type'], username=session['username'])
         
@@ -206,12 +206,16 @@ def cancelBooking():
 
 
 
-@app.route('/logout')
+@app.route('/logout', methods=['GET', 'POST'])
 def logout():
-    session.pop('logged', None)
-    session.pop('username', None)
-    session.pop('userType', None)
-    session.pop('firstname', None)
+    if 'logged' in session:
+
+        if request.method == 'POST':
+
+            session.pop('logged', None)
+            session.pop('username', None)
+            session.pop('userType', None)
+            session.pop('firstname', None)
 
     return redirect(url_for('login'))
 
@@ -259,7 +263,7 @@ def profile():
             user = cursor.fetchone()
             return render_template('profile.html', typeOfUser=session['type'], user=user)
 
-        return render_template('profile.html', typeOfUser=session['type'], user=user)
+        return render_template('profile.html', typeOfUser=session['type'], user=session['user'])
 
 
     return redirect(url_for('login'))
@@ -336,14 +340,6 @@ def nearestcar():
 
             return redirect(url_for('rent'))
 
-        
-
-@app.route('/policy')
-def policy():
-    
-
-    return render_template('policy.html')
-
 
 @app.route('/edituser', methods=['GET', 'POST'])
 def edituser():
@@ -389,10 +385,6 @@ def edituser():
 
     return render_template('editUser.html')
 
-
-@app.route('/map')
-def map():
-    return render_template('map.html')
 
 
 @app.route('/policy')
