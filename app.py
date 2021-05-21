@@ -13,9 +13,7 @@ app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = 'genrental'
 app.config['MYSQL_DB'] = 'genrentaldb'
 
-
 mysql = MySQL(app)
-
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -31,9 +29,10 @@ def login():
         saltPass = password+salt
         hashPass = hashlib.sha256(saltPass.encode())
         encryptPass = hashPass.hexdigest()
-        
+
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM users WHERE username = %s and password = %s', (username, encryptPass))
+        cursor.execute(
+            'SELECT * FROM users WHERE username = %s and password = %s', (username, encryptPass))
         acc = cursor.fetchone()
         if acc:
             session['logged'] = True
@@ -44,10 +43,9 @@ def login():
             return redirect(url_for('rent'))
         else:
             msg = 'Incorrect Username or Password'
-        
-        
 
     return render_template('index.html', msg=msg)
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -66,29 +64,26 @@ def register():
         hashPass = hashlib.sha256(saltPass.encode())
         encryptPass = hashPass.hexdigest()
 
-        #Chec if account exists
+        # Chec if account exists
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM users WHERE username = %s', (username,))
         acc = cursor.fetchone()
-        
-        
+
         if acc:
             msg = 'Account already exists'
         elif not username or not password or not email:
             msg = 'Please fill out the form'
         else:
-            cursor.execute('INSERT INTO users VALUES (%s, %s, %s, %s, %s, %s, %s)', (username, encryptPass, email, firstName, lastName, licenseNo, userType))
+            cursor.execute('INSERT INTO users VALUES (%s, %s, %s, %s, %s, %s, %s)',
+                           (username, encryptPass, email, firstName, lastName, licenseNo, userType))
             mysql.connection.commit()
             msg = 'You have successfully registered!'
             return redirect(url_for('login'))
-            
+
     elif request.method == 'POST':
         msg = 'Please fill out form'
 
-
-
     return render_template('register.html', msg=msg)
-
 
 
 @app.route('/rent')
@@ -96,7 +91,6 @@ def register():
 
 
 def rent():
-
     if 'logged' in session:
         if request.method == 'GET':
             user = session['user']
@@ -114,7 +108,9 @@ def rent():
             
             cursor.execute('SELECT * FROM cars')
             cars = cursor.fetchall()
-
+            
+            session
+            
             my_string = ""
             cout = 0 
             for row in cars:
@@ -128,7 +124,7 @@ def rent():
 
 
  
-            return render_template('rent.html', userType=session['type'], userHistory=history, username=user, cars=cars, past=past, my_string=my_string)
+            return render_template('rent.html', userType=session['type'], userHistory=history, username=user, car=cars, past=past, my_string=my_string)
 
         return render_template('rent.html', userType=session['type'], username=session['username'])
         
@@ -209,24 +205,25 @@ def cancelBooking():
         return redirect(url_for('login'))
 
 
+
 @app.route('/logout')
 def logout():
-    session.pop('logged', none)
-    session.pop('username', none)
-    session.pop('userType', none)
-    session.pop('firstname', none)
+    session.pop('logged', None)
+    session.pop('username', None)
+    session.pop('userType', None)
+    session.pop('firstname', None)
 
     return redirect(url_for('login'))
-
 
 
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
     if 'logged' in session:
-        
+
         if request.method == 'GET':
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute('SELECT * FROM users WHERE username = %s', (session['user'],))
+            cursor.execute(
+                'SELECT * FROM users WHERE username = %s', (session['user'],))
             user = cursor.fetchone()
             return render_template('profile.html', typeOfUser=session['type'], user=user)
 
@@ -237,26 +234,31 @@ def profile():
             newValue = request.form['newValue']
 
             print(changeSection)
-            
+
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
             if changeSection == 'firstname':
-                cursor.execute('UPDATE users SET firstname = %s WHERE username = %s',(newValue, session['user']))
+                cursor.execute(
+                    'UPDATE users SET firstname = %s WHERE username = %s', (newValue, session['user']))
                 mysql.connection.commit()
             if changeSection == 'lastname':
-                cursor.execute('UPDATE users SET lastname = %s WHERE username = %s',(newValue, session['user']))
+                cursor.execute(
+                    'UPDATE users SET lastname = %s WHERE username = %s', (newValue, session['user']))
                 mysql.connection.commit()
             if changeSection == 'email':
-                cursor.execute('UPDATE users SET email = %s WHERE username = %s',(newValue, session['user']))
+                cursor.execute(
+                    'UPDATE users SET email = %s WHERE username = %s', (newValue, session['user']))
                 mysql.connection.commit()
             if changeSection == 'licenseNo':
-                cursor.execute('UPDATE users SET licenseNo = %s WHERE username = %s',(newValue, session['user']))
+                cursor.execute(
+                    'UPDATE users SET licenseNo = %s WHERE username = %s', (newValue, session['user']))
                 mysql.connection.commit()
-            
+
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute('SELECT * FROM users WHERE username = %s', (session['user'],))
+            cursor.execute(
+                'SELECT * FROM users WHERE username = %s', (session['user'],))
             user = cursor.fetchone()
             return render_template('profile.html', typeOfUser=session['type'], user=user)
-      
+
         return render_template('profile.html', typeOfUser=session['type'], user=user)
 
 
@@ -344,47 +346,157 @@ def policy():
 
 
 @app.route('/edituser', methods=['GET', 'POST'])
-def edituser():   
+def edituser():
 
     if request.method == 'GET':
-        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)  
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM users')
         user = cursor.fetchall()
         return render_template('editUser.html', user=user)
 
     msg = ''
     if request.method == 'POST' and 'selectUser' in request.form and 'changeSection' in request.form and 'newValue' in request.form:
-        
-        
-        
+
         selectUser = request.form['selectUser']
         changeSection = request.form['changeSection']
         newValue = request.form['newValue']
 
         print(changeSection)
-         
+
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         if changeSection == 'firstname':
-            cursor.execute('UPDATE users SET firstname = %s WHERE username = %s',(newValue, selectUser))
+            cursor.execute(
+                'UPDATE users SET firstname = %s WHERE username = %s', (newValue, selectUser))
             mysql.connection.commit()
         if changeSection == 'lastname':
-            cursor.execute('UPDATE users SET lastname = %s WHERE username = %s',(newValue, selectUser))
+            cursor.execute(
+                'UPDATE users SET lastname = %s WHERE username = %s', (newValue, selectUser))
             mysql.connection.commit()
         if changeSection == 'userType':
-            cursor.execute('UPDATE users SET userType = %s WHERE username = %s',(newValue, selectUser))
+            cursor.execute(
+                'UPDATE users SET userType = %s WHERE username = %s', (newValue, selectUser))
             mysql.connection.commit()
         if changeSection == 'licenseNo':
-            cursor.execute('UPDATE users SET licenseNo = %s WHERE username = %s',(newValue, selectUser))
+            cursor.execute(
+                'UPDATE users SET licenseNo = %s WHERE username = %s', (newValue, selectUser))
             mysql.connection.commit()
-        
-        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)  
+
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM users')
         user = cursor.fetchall()
         return render_template('editUser.html', user=user)
-        
-      
 
-        
-    return render_template('editUser.html')   
 
+    return render_template('editUser.html')
+
+
+@app.route('/map')
+def map():
+    return render_template('map.html')
+
+
+@app.route('/policy')
+def policy():
+    return render_template('policy.html')
+
+
+@app.route('/carmanage', methods=['GET', 'POST', 'DELETE'])
+def carmanage():
+
+    if request.method == 'GET':
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT * FROM cars')
+        car = cursor.fetchall()
+        print(car)
+        return render_template('carmanage.html', car=car)
+
+    msg = ''
+    if request.method == 'POST' and 'license' in request.form and 'color' in request.form and 'model' in request.form and 'make' in request.form and 'location' in request.form and 'rating' in request.form and 'changeSection' not in request.form:
+
+        license = request.form['license']
+        color = request.form['color']
+        model = request.form['model']
+        make = request.form['make']
+        location = request.form['location']
+        rating = request.form['rating']
+
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+
+        sql = "INSERT INTO cars (license, color, model, make, location, rating) VALUES (%s, %s, %s, %s, %s, %s)"
+        val = (license, color, model, make, location, rating)
+        cursor.execute(sql, val)
+        mysql.connection.commit()
+        # if changeSection == 'lastname':
+        #     cursor.execute(
+        #         'UPDATE users SET lastname = %s WHERE username = %s', (newValue, selectUser))
+        #     mysql.connection.commit()
+        # if changeSection == 'userType':
+        #     cursor.execute(
+        #         'UPDATE users SET userType = %s WHERE username = %s', (newValue, selectUser))
+        #     mysql.connection.commit()
+        # if changeSection == 'licenseNo':
+        #     cursor.execute(
+        #         'UPDATE users SET licenseNo = %s WHERE username = %s', (newValue, selectUser))
+        #     mysql.connection.commit()
+
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT * FROM cars')
+        car = cursor.fetchall()
+        return render_template('carmanage.html', car=car)
+
+    if request.method == 'POST' and 'license' in request.form and 'newValue' in request.form and 'changeSection' in request.form:
+        license = request.form['license']
+        changeSection = request.form['changeSection']
+        newValue = request.form['newValue']
+
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        if changeSection == 'license':
+            cursor.execute(
+                'UPDATE cars SET license = %s WHERE license = %s', (newValue, license))
+            mysql.connection.commit()
+        if changeSection == 'color':
+            cursor.execute(
+                'UPDATE cars SET color = %s WHERE license = %s', (newValue, license))
+            mysql.connection.commit()
+        if changeSection == 'model':
+            cursor.execute(
+                'UPDATE cars SET model = %s WHERE license = %s', (newValue, license))
+            mysql.connection.commit()
+        if changeSection == 'make':
+            cursor.execute(
+                'UPDATE cars SET make = %s WHERE license = %s', (newValue, license))
+            mysql.connection.commit()
+        if changeSection == 'longlat':
+            cursor.execute(
+                'UPDATE cars SET longlat = %s WHERE license = %s', (newValue, license))
+            mysql.connection.commit()
+        if changeSection == 'location':
+            cursor.execute(
+                'UPDATE cars SET location = %s WHERE license = %s', (newValue, license))
+            mysql.connection.commit()
+        if changeSection == 'rating':
+            cursor.execute(
+                'UPDATE cars SET rating = %s WHERE license = %s', (newValue, license))
+            mysql.connection.commit()
+
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT * FROM cars')
+        car = cursor.fetchall()
+        return render_template('carmanage.html', car=car)
+
+    if request.method == 'POST' and 'license' in request.form and 'delete' in request.form:
+        license = request.form['license']
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+
+        sql = "DELETE FROM cars WHERE license = %s"
+        val = ([license])
+        cursor.execute(sql, val)
+        mysql.connection.commit()
+
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT * FROM cars')
+        car = cursor.fetchall()
+        return render_template('carmanage.html', car=car)
+
+    return render_template('carmanage.html')
 
