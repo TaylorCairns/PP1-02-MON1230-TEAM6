@@ -7,40 +7,7 @@
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <title>genRental</title>
 </head>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#"></a>
-  <img src="https://i.ibb.co/YZh1fvQ/sN89ncS.png" alt="logo" style="width:50px;height:50px;">
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
-    aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Rent <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{ url_for('profile') }}">Profile</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Log In</a>
-      </li>
-      <li class="nav-item">
-      <li class="nav-item">
-        <a class="nav-link" href="#">Sign Up</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Contact Us</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{ url_for('map') }}">Map</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-      </li>
-    </ul>
-  </div>
-</nav>
+
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
   integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
@@ -50,60 +17,90 @@
 
 
 <body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class=" navbar-brand" href="#"></a>
+    <img src="https://i.ibb.co/YZh1fvQ/sN89ncS.png" alt="logo" style="width:50px;height:50px;">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div id="customerNavBar">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('rent') }}">Rent</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('profile') }}">Profile</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('edituser') }}">Edit User</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('carmanage') }}">Car Manage</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('policy') }}">Policy</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('logout') }}">Log Out</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="rentCars">
+    <h1>Rent a Car</h1>
 
-  <body>
-    <div class="rentCars">
-      <h1>Rent a Car</h1>
+    <h2>Cars</h2>
+    <div>
+      <form action="{{ url_for('rent') }}" method="post">
+        <table id="carsTable">
+          <TR>
+            <th>License</th>
+            <th>Color</th>
+            <th>Model</th>
+            <th>Longlat</th>
+            <th>Location</th>
+            <th>Rating</th>
+          </TR>
 
-      <h2>Cars</h2>
+          {% for row in user %}
+          <TR id="carDetailTable">
+            <TD>test</TD>
+            <TD>test</TD>
+            <TD>test</TD>
+            <TD>test</TD>
+            <TD>test</TD>
+            <TD>test</TD>
+            <td><input type="button" class="carChoosing" onclick="customerNavBarDisplay()">Choose this one</button>
+            </td>
+          </TR>
+          {% endfor %}
+        </table>
+        <div>
+          <button onclick="customerNavBarDisplay()">Submit My Selection</button>
+        </div>
+      </form>
       <div>
-        <form action="{{ url_for('rent') }}" method="post">
-          <table id="carsTable">
-            <TR>
-              <th>License</th>
-              <th>Color</th>
-              <th>Model</th>
-              <th>Longlat</th>
-              <th>Location</th>
-              <th>Rating</th>
-            </TR>
-
-            {% for row in user %}
-            <TR id="carDetailTable">
-              <TD>test</TD>
-              <TD>test</TD>
-              <TD>test</TD>
-              <TD>test</TD>
-              <TD>test</TD>
-              <TD>test</TD>
-              <td><input type="radio" class="carChoosing">Choose this one</button></td>
-            </TR>
-            {% endfor %}
-          </table>
-          <div>
-            <button>Submit My Selection</button>
-          </div>
-        </form>
+        <button onclick="customerNavBarDisplay()">test</button>
       </div>
-
     </div>
 
-    <!-- <script>
-      function addRentButton() {
-        var divRentButton = document.createElement('div');
-
-        var rentButton = document.createElement('button');
-        rentButton.innerHTML = "Rent this one";
-        divRentButton.appendChild(rentButton);
-
-        document.getElementsById('carDetailTable')[0].appendChild(divRentButton);
+  </div>
+  <script>
+    function customerNavBarDisplay() {
+      var test = sessionStorage.getItem("type");
+      console.log(test);
+      if (test == "customer") {
+        document.getElementById("managerNavBar").style.display = "none";
       }
-
-      function showPopUp() {
-        var p = document.createElement('prompt');
-
+      else {
+        document.getElementById("customerNavBar").setAttribute("style", "display:none")
       }
-    </script> -->
-  </body>
+    }
+
+  </script>
+
+</body>
+
 
 </html>
