@@ -4,7 +4,6 @@ import MySQLdb.cursors
 import hashlib
 from datetime import datetime, timedelta
 import math
-import mpu
 
 app = Flask(__name__)
 app.secret_key = 'yoursecretkey'
@@ -117,7 +116,7 @@ def rent():
                 labelName = str(row['carId'])
                 my_string = my_string + '&markers=color:' + row['color'] + '%7Clabel:' + labelName + '%7C' + row['longlat'] + '|'
 
-            print(my_string)
+            #print(my_string)
             
 
 
@@ -210,14 +209,14 @@ def cancelBooking():
 def logout():
     if 'logged' in session:
 
-        if request.method == 'POST':
+        #if request.method == 'POST':
 
-            session.pop('logged', None)
-            session.pop('username', None)
-            session.pop('userType', None)
-            session.pop('firstname', None)
+        session.pop('logged', None)
+        session.pop('username', None)
+        session.pop('userType', None)
+        session.pop('firstname', None)
 
-    return redirect(url_for('login'))
+        return redirect(url_for('login'))
 
 
 @app.route('/profile', methods=['GET', 'POST'])
