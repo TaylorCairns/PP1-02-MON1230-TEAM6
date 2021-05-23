@@ -346,7 +346,7 @@ def nearestcar():
 
 @app.route('/edituser', methods=['GET', 'POST'])
 def edituser():
-    if 'admin' in session['type']:
+    if 'admin' in session['type'] and 'logged' in session:
 
         if request.method == 'GET':
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -400,7 +400,7 @@ def policy():
 
 @app.route('/carmanage', methods=['GET', 'POST', 'DELETE'])
 def carmanage():
-    if 'manager' in session['type']:
+    if 'manager' in session['type'] and 'logged' in session:
 
         if request.method == 'GET':
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
