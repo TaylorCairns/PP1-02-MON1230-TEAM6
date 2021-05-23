@@ -1,41 +1,95 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>Register</title>
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	</head>
-	<body>
-		<div class="register">
-			<h1>Register</h1>
-			<div class="links">
-				<a href="{{ url_for('login') }}">Login</a>
-				<a href="{{ url_for('register') }}" class="active">Register</a>
-			</div>
-			<form action="{{ url_for('register') }}" method="post" autocomplete="off">
-				<label for="username">
-					<i class="fas fa-user"></i>
-				</label>
-				<input type="text" name="username" placeholder="Username" id="username" required>
-				<label for="password">
-					<i class="fas fa-lock"></i>
-				</label>
-				<input type="password" name="password" placeholder="Password" id="password" required>
-				<label for="email">
-					<i class="fas fa-envelope"></i>
-				</label>
-				<input type="text" name="firstName" placeholder="firstName" id="firstName" required>
-				<label for="username">
-					<i class="fas fa-envelope"></i>
-				</label>
-				<input type="text" name="lastName" placeholder="lastName" id="lastName" required>
-				<label for="username">
-					<i class="fas fa-envelope"></i>
-				</label>
-				<input type="email" name="email" placeholder="Email" id="email" required>
-				<div class="msg">{{ msg }}</div>
-				<input type="submit" value="Register">
-			</form>
-		</div>
-	</body>
+
+<head>
+    <title>Register</title>
+
+    <!--Styling-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+
+
+        <!--Main body-->
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-2"></div>
+            <div class="col-lg-6 col-md-8 login-box">
+                <div class="col-lg-12 login-key">
+                    <i class="fa fa-key" aria-hidden="true"></i>
+                </div>
+
+
+                <!--Function to make user input information-->
+                <div class="col-lg-12 login-title">
+                    SIGN UP
+                </div>
+
+                <div class="col-lg-12 login-form">
+                    <div class="col-lg-12 login-form">
+                        <form action="{{ url_for('register') }}" method="post">
+                            <div class="form-group">
+                                <label class="form-control-label">USERNAME</label>
+                                <input type="text" class="form-control" name="username">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">FIRSTNAME</label>
+                                <input type="text" class="form-control" name="firstName">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">LASTNAME</label>
+                                <input type="text" class="form-control" name="lastName">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">EMAIL</label>
+                                <input type="email" class="form-control" name="email">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">PASSWORD</label>
+                                <input type="password" class="form-control" i name="password">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">CONFIRM PASSWORD</label>
+                                <input type="password" class="form-control" i name="confirmPassword">
+                            </div>
+                            <div class="msg">{{ msg }}</div>
+                            <div class="col-lg-12 loginbttm">
+                                <div class="col-lg-12 loginbttm">
+                                    <div class="col-lg-6 login-btm login-text">
+                                        <!-- Error Message -->
+                                    </div>
+                                    <div  class="col-lg-6 login-btm login-button">
+                                        <button type="submit" class="btn btn-outline-primary">SIGN UP</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-12 loginbttm">
+                    <div class="col-lg-6 login-btm login-text">
+                    </div>
+
+                    <!--Used a "Dumb" method to move btn postition and text colour-->
+                    <div style="left: -120px"; class="col-lg-6 login-btm login-button">
+                        <button  class="btn btn-outline-primary"><a style="color: #FFFFFF;" href="{{ url_for('login') }}">LOGIN</a></button>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-2"></div>
+            </div>
+        </div>
+</body>
+
 </html>
