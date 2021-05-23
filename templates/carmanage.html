@@ -3,17 +3,19 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>genRental</title>
     <style>
-        .form-box {
-            margin-top: 75px;
+        .carmanagebox {
+            width: 1000px;
+        }
+
+        .carmanageformbox {
+            margin-top: 50px;
             height: auto;
             background: rgb(11, 110, 133);
             text-align: center;
             box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-            width: 80%;
+            width: 1000px;
             padding: 50px;
         }
 
@@ -41,11 +43,13 @@
 
         table {
             width: 100%;
-            color: white;
+            color: black;
             border: 1px solid black;
             border-collapse: collapse;
         }
     </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}">
@@ -106,13 +110,13 @@
             removeChild(form);
 
             var divRow = document.createElement("div");
-            divRow.setAttribute('class', "row");
+            divRow.setAttribute('class', "carmanagebox");
 
             var divAlign = document.createElement("div");
             divAlign.setAttribute('class', "col-lg-3 col-md-2");
 
             var divLoginBox = document.createElement("div");
-            divLoginBox.setAttribute('class', "col-lg-6 col-md-8 form-box");
+            divLoginBox.setAttribute('class', "carmanageformbox");
 
             var divTitle = document.createElement("div");
             divTitle.setAttribute('class', "col-lg-12 login-title");
@@ -279,13 +283,13 @@
             removeChild(form);
 
             var divRow = document.createElement("div");
-            divRow.setAttribute('class', "row");
+            divRow.setAttribute('class', "carmanagebox");
 
             var divAlign = document.createElement("div");
             divAlign.setAttribute('class', "col-lg-3 col-md-2");
 
             var divLoginBox = document.createElement("div");
-            divLoginBox.setAttribute('class', "col-lg-6 col-md-8 form-box");
+            divLoginBox.setAttribute('class', "carmanageformbox");
 
             var divTitle = document.createElement("div");
             divTitle.setAttribute('class', "col-lg-12 login-title");
@@ -430,13 +434,13 @@
             removeChild(form);
 
             var divRow = document.createElement("div");
-            divRow.setAttribute('class', "row");
+            divRow.setAttribute('class', "carmanagebox");
 
             var divAlign = document.createElement("div");
             divAlign.setAttribute('class', "col-lg-3 col-md-2");
 
             var divLoginBox = document.createElement("div");
-            divLoginBox.setAttribute('class', "col-lg-6 col-md-8 form-box");
+            divLoginBox.setAttribute('class', "carmanageformbox");
 
             var divTitle = document.createElement("div");
             divTitle.setAttribute('class', "col-lg-12 login-title");
