@@ -15,13 +15,10 @@ app.config['MYSQL_DB'] = 'genrentaldb'
 mysql = MySQL(app)
 
 
-
-
 @app.route('/', methods=['GET', 'POST'])
 def login():
 
     msg = ''
-
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
         username = request.form['username']
         password = request.form['password']
@@ -89,17 +86,20 @@ def register():
 
 
 @app.route('/rent')
+
+
+
 def rent():
-    
+    if 'logged' in session:
         if request.method == 'GET':
-            user = 'red'
+            user = session['user']
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute('SELECT * FROM bookings WHERE completed = %s AND username = %s', ('No', 'red',))
+            cursor.execute('SELECT * FROM bookings WHERE completed = %s AND username = %s', ('No', session['user'],))
             history = cursor.fetchall()
             mysql.connection.commit()
 
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute('SELECT * FROM bookings WHERE completed = %s AND username = %s', ('Yes', 'red',))
+            cursor.execute('SELECT * FROM bookings WHERE completed = %s AND username = %s', ('Yes', session['user'],))
             past = cursor.fetchall()
             mysql.connection.commit()
 
@@ -127,21 +127,21 @@ def rent():
 
 
  
-            return render_template('rent.html', userType='admin', userHistory=history, username=user, cars=cars, past=past, my_string=my_string)
+            return render_template('rent.html', userType=session['type'], userHistory=history, username=user, cars=cars, past=past, my_string=my_string)
 
-        return render_template('rent.html', userType='admin', username='red')
+        return render_template('rent.html', userType=session['type'], username=session['username'])
         
 
             
-    
+    return redirect(url_for('login'))
 
 
 
 @app.route('/booking', methods=['GET', 'POST'])
 def booking():
-    
+    if 'logged' in session:
         if request.method == 'POST':
-                user = 'red'
+                user = session['user']
                 
 
 
@@ -167,13 +167,14 @@ def booking():
                     mysql.connection.commit()
 
         return redirect(url_for('rent'))
-    
+    else:
+        return redirect(url_for('login'))
 
 @app.route('/cancelBooking', methods=['GET', 'POST'])
 def cancelBooking():
-    
+    if 'logged' in session:
         if request.method == 'POST' and 'cancelId' in request.form:
-            user = 'red'
+            user = session['user']
             cancelId = request.form['cancelId']
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
             cursor.execute('SELECT * FROM bookings WHERE id = %s AND username = %s', (cancelId, user))
@@ -203,27 +204,35 @@ def cancelBooking():
 
 
 
-    
+    else:
+        return redirect(url_for('login'))
 
 
 
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
-    
+    if 'logged' in session:
 
-    return redirect(url_for('login'))
+        #if request.method == 'POST':
+
+        session.pop('logged', None)
+        session.pop('username', None)
+        session.pop('userType', None)
+        session.pop('firstname', None)
+
+        return redirect(url_for('login'))
 
 
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
-    
+    if 'logged' in session:
 
         if request.method == 'GET':
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
             cursor.execute(
-                'SELECT * FROM users WHERE username = %s', ('red',))
+                'SELECT * FROM users WHERE username = %s', (session['user'],))
             user = cursor.fetchone()
-            return render_template('profile.html', typeOfUser='admin', user=user)
+            return render_template('profile.html', typeOfUser=session['type'], user=user)
 
         msg = ''
         if request.method == 'POST' and 'newValue' in request.form and 'changeSection' in request.form:
@@ -236,31 +245,31 @@ def profile():
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
             if changeSection == 'firstname':
                 cursor.execute(
-                    'UPDATE users SET firstname = %s WHERE username = %s', (newValue, 'red'))
+                    'UPDATE users SET firstname = %s WHERE username = %s', (newValue, session['user']))
                 mysql.connection.commit()
             if changeSection == 'lastname':
                 cursor.execute(
-                    'UPDATE users SET lastname = %s WHERE username = %s', (newValue, 'red'))
+                    'UPDATE users SET lastname = %s WHERE username = %s', (newValue, session['user']))
                 mysql.connection.commit()
             if changeSection == 'email':
                 cursor.execute(
-                    'UPDATE users SET email = %s WHERE username = %s', (newValue, 'red'))
+                    'UPDATE users SET email = %s WHERE username = %s', (newValue, session['user']))
                 mysql.connection.commit()
             if changeSection == 'licenseNo':
                 cursor.execute(
-                    'UPDATE users SET licenseNo = %s WHERE username = %s', (newValue, 'red'))
+                    'UPDATE users SET licenseNo = %s WHERE username = %s', (newValue, session['user']))
                 mysql.connection.commit()
 
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
             cursor.execute(
-                'SELECT * FROM users WHERE username = %s', ('red',))
+                'SELECT * FROM users WHERE username = %s', (session['user'],))
             user = cursor.fetchone()
-            return render_template('profile.html', typeOfUser='admin', user=user)
+            return render_template('profile.html', typeOfUser=session['type'], user=user)
 
-        return render_template('profile.html', typeOfUser='admin', user='red')
+        return render_template('profile.html', typeOfUser=session['type'], user=session['user'])
 
 
-    
+    return redirect(url_for('login'))
 
 
 
@@ -295,9 +304,9 @@ def profile():
 #print("Distance in KM : {} ".format(distance(origin, destination)))
 
 def nearestcar():
-    if 'logged' in session:
+   if 'logged' in session:
         if request.method == 'POST':
-            user = 'admin'
+            user = session['user']
             date = datetime.now()
             
         
@@ -337,7 +346,7 @@ def nearestcar():
 
 @app.route('/edituser', methods=['GET', 'POST'])
 def edituser():
-    
+    if 'admin' in session['type'] and 'logged' in session:
 
         if request.method == 'GET':
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -379,7 +388,7 @@ def edituser():
 
 
         return render_template('editUser.html')
-    
+    return redirect(url_for('login'))
     
 
 
@@ -391,7 +400,7 @@ def policy():
 
 @app.route('/carmanage', methods=['GET', 'POST', 'DELETE'])
 def carmanage():
-    
+    if 'manager' in session['type'] and 'logged' in session:
 
         if request.method == 'GET':
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -490,5 +499,4 @@ def carmanage():
 
         return render_template('carmanage.html')
 
-    
-
+    return redirect(url_for('login'))
