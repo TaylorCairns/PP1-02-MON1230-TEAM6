@@ -94,12 +94,12 @@ def rent():
         if request.method == 'GET':
             user = 'red'
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute('SELECT * FROM bookings WHERE completed = %s AND username = %s', ('No', session['user'],))
+            cursor.execute('SELECT * FROM bookings WHERE completed = %s AND username = %s', ('No', 'red',))
             history = cursor.fetchall()
             mysql.connection.commit()
 
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute('SELECT * FROM bookings WHERE completed = %s AND username = %s', ('Yes', session['user'],))
+            cursor.execute('SELECT * FROM bookings WHERE completed = %s AND username = %s', ('Yes', 'red',))
             past = cursor.fetchall()
             mysql.connection.commit()
 
