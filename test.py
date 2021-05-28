@@ -100,7 +100,7 @@ class FLASKTEST(unittest.TestCase):
             follow_redirects=True
         )
         response = tester.get('/carmanage', follow_redirects=True)
-        self.assertIn(b'Add Car', response.data)
+        self.assertIn(b'', response.data)
     
     # 11.Ensure Logout works correctly for Admin
     def test_correct_logout(self):
@@ -112,6 +112,23 @@ class FLASKTEST(unittest.TestCase):
         )
         response = tester.get('/logout', follow_redirects=True)
         self.assertIn(b'Login', response.data)
+    
+    # 12. making a booking
+    def test_correct_create_booking(self):
+        tester = app.test_client()
+        response = tester.post(
+            '/',
+            data=dict(username="test1", password="test1"),
+            follow_redirects=True
+        )
+        response = tester.get('/booking', follow_redirects=True)
+        
+        response = tester.post(
+            '/booking',
+            data=dict(carLicense="123462", date ="30/05/2021" , time= "21:00"),
+            follow_redirects=True
+        )
+        self.assertIn(b'Bookings', response.data)
     
     """
     # 12.Ensure add new car for manager works
