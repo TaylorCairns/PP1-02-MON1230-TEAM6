@@ -225,7 +225,7 @@ def profile():
 
         msg = ''
         if request.method == 'POST' and 'newValue' in request.form and 'changeSection' in request.form:
-            #selectUser = request.form['selectUser']
+            
             changeSection = request.form['changeSection']
             newValue = request.form['newValue']
 
