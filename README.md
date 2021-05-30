@@ -45,7 +45,7 @@ Refer to Development Guide Document for a more in depth explanation
 
 1. Prequisites
 
-    Have project cloned and be on accountFeature branch
+    Have project cloned
     
     Have python installed
 
