@@ -14,6 +14,7 @@ app.config['MYSQL_DB'] = 'genrentaldb'
 
 mysql = MySQL(app)
 
+#Login function requests data from user to create session information, if successful login, returns rent page, else returns log in page.
 
 @app.route('/', methods=['GET', 'POST'])
 def login():
@@ -45,6 +46,7 @@ def login():
 
     return render_template('index.html', msg=msg)
 
+#Register Function requests data from user, inserts new entries into appropriate tables. Returns Register page
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -84,11 +86,9 @@ def register():
 
     return render_template('register.html', msg=msg)
 
+#Rent Function loads data based on session information, returns rent page
 
 @app.route('/rent')
-
-
-
 def rent():
     if 'logged' in session:
         if request.method == 'GET':
@@ -134,7 +134,7 @@ def rent():
             
     return redirect(url_for('login'))
 
-
+#Booking Function requests data from user, inserts new data into appropriate tables
 
 @app.route('/booking', methods=['GET', 'POST'])
 def booking():
@@ -168,6 +168,8 @@ def booking():
         return redirect(url_for('rent'))
     else:
         return redirect(url_for('login'))
+
+#Cancel Booking Function requests data from user and deletes appropriate data from database table
 
 @app.route('/cancelBooking', methods=['GET', 'POST'])
 def cancelBooking():
@@ -207,6 +209,7 @@ def cancelBooking():
         return redirect(url_for('login'))
 
 
+#Logout Function logs user out of session
 
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
@@ -220,6 +223,7 @@ def logout():
 
         return redirect(url_for('login'))
 
+#Profile Function loads user data on Profile page.
 
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
@@ -270,7 +274,7 @@ def profile():
     return redirect(url_for('login'))
 
 
-
+#Nearestcar Function uses long lat data with google api to display car locations on map.
 @app.route('/edituser', methods=['GET', 'POST'])
 def edituser():
     if 'admin' in session['type'] and 'logged' in session:
@@ -318,12 +322,13 @@ def edituser():
     return redirect(url_for('login'))
     
 
-
+#Policy Function returns Policy page
 
 @app.route('/policy')
 def policy():
     return render_template('policy.html')
 
+#Car Manage Function allows manager to add, edit, delete cars from database, returns car manage page if manager, else login page.
 
 @app.route('/carmanage', methods=['GET', 'POST', 'DELETE'])
 def carmanage():
