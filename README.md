@@ -44,7 +44,9 @@ Guide to get this application running
 Refer to Development Guide Document for a more in depth explanation
 
 1. Prequisites
+
     Have project cloned and be on accountFeature branch
+    
     Have python installed
 
 2. Create virtual environment
