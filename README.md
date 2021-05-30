@@ -1,24 +1,69 @@
 # PP1-02-MON1230-TEAM6
-PP1-02-MON1230-TEAM6
 
 
-This is a guide to get this application running
+V1.0 Release Notes
+
+Implemented Features
+
+-User Booking
+
+-User cancel/end booking
+
+-Admin, View and edit users
+
+-Manager, add, edit, delete cars
+
+-User Privacy Policy
+
+-User, view car rental information
+
+-User, view booking history
+
+-Register User
+
+-Login
+
+-Session authorization
+
+-Find nearest car
+
+
+Github link
+
+https://github.com/TaylorCairns/PP1-02-MON1230-TEAM6
+
+Website link
+
+http://pp1-02-mon1230-team6-312012.ts.r.appspot.com/
 
 
 
 
-Prequisites
-Have project cloned and be on accountFeature branch
-Have python installed
+Guide to get this application running
 
-Create virtual environment
-python -m venv venv
-Activate environment
-venv\Scripts\activate
-Go to project location
-Install requirements
-pip install -r requirements.txt
+Refer to Development Guide Document for a more in depth explanation
 
-set FLASK_APP=app
-flask run
+1. Prequisites
+    Have project cloned and be on accountFeature branch
+    Have python installed
+
+2. Create virtual environment
+
+    python -m venv venv
+
+3. Activate environment
+
+    venv\Scripts\activate
+
+4. Go to project location
+
+5. Install requirements
+
+    pip install -r requirements.txt
+
+6. Set up flask
+
+    set FLASK_APP=app
+
+    flask run
 
