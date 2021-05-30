@@ -36,6 +36,18 @@ Website link
 
 http://pp1-02-mon1230-team6-312012.ts.r.appspot.com/
 
+Website Credentials
+Customer
+Username - Customer
+Password - Customer
+
+Admin
+Username - Admin
+Password - Admin
+
+Manager 
+Username - Manager 
+Password - Manager 
 
 
 
