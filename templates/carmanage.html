@@ -3,54 +3,33 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>genRental</title>
     <style>
-        .form-box {
-            margin-top: 75px;
+        .carmanagebox {
+            width: 1000px;
+        }
+
+        .carmanageformbox {
+            margin-top: 50px;
             height: auto;
             background: rgb(11, 110, 133);
             text-align: center;
             box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-            width: 80%;
+            width: 1000px;
             padding: 50px;
-        }
-
-        table {
-            width: 90%;
-        }
-
-        .btn-group button {
-            background-color: #04AA6D;
-            border: 1px solid green;
-            color: white;
-            padding: 10px 24px;
-            cursor: pointer;
-        }
-
-        .open-button {
-            background-color: #555;
-            color: white;
-            padding: 16px 20px;
-            border: none;
-            cursor: pointer;
-            opacity: 0.8;
-            width: 280px;
-        }
-
-        table {
-            width: 100%;
-            color: white;
-            border: 1px solid black;
-            border-collapse: collapse;
         }
     </style>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!--stylesheet link for bootstrap-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!--stylesheet link for bootstrap-->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}">
+    <!--stylesheet link for common elements-->
 </head>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <!--navigation bar-->
     <a class=" navbar-brand" href="#"></a>
     <img src="https://i.ibb.co/YZh1fvQ/sN89ncS.png" alt="logo" style="width:50px;height:50px;">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -92,27 +71,32 @@
 
 <body>
     <div class="btn-group" style="width: 50%; display: block" id="navbarButtons">
+        <!--div for buttons related to car manage functions-->
         <button class="open-button" onclick="openAddForm()">Add Car</button>
+        <!--button for run javascript of create add car form into the web-->
         <button class="open-button" onclick="openEditForm()">Edit Car</button>
+        <!--button for run javascript of create
+        edit car form into the web-->
         <button class="open-button" onclick="openDeleteForm()">Delete Car</button>
+        <!--button for run javascript of create
+        delete car form into the web-->
     </div>
 
-    <div class="container">
-    </div>
+    <div class="container"></div>
 
     <script>
-        function openAddForm() {
-            const form = document.getElementsByClassName('container')[0];
-            removeChild(form);
+        function openAddForm() {        //script for create add car form
+            const form = document.getElementsByClassName('container')[0];   //get the 'container' first element
+            removeChild(form);                                              //clean the element
 
-            var divRow = document.createElement("div");
-            divRow.setAttribute('class', "row");
+            var divRow = document.createElement("div");     //create element
+            divRow.setAttribute('class', "carmanagebox");   //set attribute of this element
 
             var divAlign = document.createElement("div");
             divAlign.setAttribute('class', "col-lg-3 col-md-2");
 
             var divLoginBox = document.createElement("div");
-            divLoginBox.setAttribute('class', "col-lg-6 col-md-8 form-box");
+            divLoginBox.setAttribute('class', "carmanageformbox");
 
             var divTitle = document.createElement("div");
             divTitle.setAttribute('class', "col-lg-12 login-title");
@@ -121,7 +105,7 @@
             var divLoginForm = document.createElement("div");
             divLoginForm.setAttribute('class', "col-lg-12 login-form");
 
-            divRow.appendChild(divAlign);
+            divRow.appendChild(divAlign);                   //append element
             divRow.appendChild(divLoginBox);
             divLoginBox.appendChild(divTitle);
 
@@ -268,24 +252,26 @@
             document.getElementsByClassName('container')[0].appendChild(divRow);
         }
 
-        function removeChild(parent) {
+        function removeChild(parent) {              //delete the element from parent element
             while (parent.firstChild) {
                 parent.removeChild(parent.firstChild);
             }
         }
 
-        function openEditForm() {
+        function openEditForm() {                   //script for create edit car form
             const form = document.getElementsByClassName('container')[0];
             removeChild(form);
 
             var divRow = document.createElement("div");
-            divRow.setAttribute('class', "row");
+            divRow.setAttribute('class', "carmanagebox");
 
             var divAlign = document.createElement("div");
             divAlign.setAttribute('class', "col-lg-3 col-md-2");
 
             var divLoginBox = document.createElement("div");
-            divLoginBox.setAttribute('class', "col-lg-6 col-md-8 form-box");
+
+            divLoginBox.setAttribute('class', "carmanageformbox");
+
 
             var divTitle = document.createElement("div");
             divTitle.setAttribute('class', "col-lg-12 login-title");
@@ -384,25 +370,32 @@
             trTitle.appendChild(tdRating);
             t.appendChild(trTitle);
 
-            var forStart = document.createElement("python");
+            var forStart = document.createElement("python");        //python command in javascript
             forStart = "{% for row in car %}";
             t.append(forStart);
 
             var trValue = document.createElement("tr");
             var tdLicenseValue = document.createElement("td");
             tdLicenseValue.innerHTML = "{{ row.license }}";
+            tdLicenseValue.setAttribute('style', "color:black");
             var tdColorValue = document.createElement("td");
             tdColorValue.innerHTML = "{{ row.color }}";
+            tdColorValue.setAttribute('style', "color:black");
             var tdModelValue = document.createElement("td");
             tdModelValue.innerHTML = "{{ row.model }}";
+            tdModelValue.setAttribute('style', "color:black");
             var tdMakeValue = document.createElement("td");
             tdMakeValue.innerHTML = "{{ row.make }}";
+            tdMakeValue.setAttribute('style', "color:black");
             var tdLongLatValue = document.createElement("td");
             tdLongLatValue.innerHTML = "{{ row.longlat }}";
+            tdLongLatValue.setAttribute('style', "color:black");
             var tdLocationValue = document.createElement("td");
             tdLocationValue.innerHTML = "{{ row.location }}";
+            tdLocationValue.setAttribute('style', "color:black");
             var tdRatingValue = document.createElement("td");
             tdRatingValue.innerHTML = "{{ row.rating }}";
+            tdRatingValue.setAttribute('style', "color:black");
 
             trValue.appendChild(tdLicenseValue);
             trValue.appendChild(tdColorValue);
@@ -425,18 +418,18 @@
             document.getElementsByClassName('container')[0].appendChild(divRow);
         }
 
-        function openDeleteForm() {
+        function openDeleteForm() {                     //script for create delte car form
             const form = document.getElementsByClassName('container')[0];
             removeChild(form);
 
             var divRow = document.createElement("div");
-            divRow.setAttribute('class', "row");
+            divRow.setAttribute('class', "carmanagebox");
 
             var divAlign = document.createElement("div");
             divAlign.setAttribute('class', "col-lg-3 col-md-2");
 
             var divLoginBox = document.createElement("div");
-            divLoginBox.setAttribute('class', "col-lg-6 col-md-8 form-box");
+            divLoginBox.setAttribute('class', "carmanageformbox");
 
             var divTitle = document.createElement("div");
             divTitle.setAttribute('class', "col-lg-12 login-title");
@@ -508,18 +501,25 @@
             var trValue = document.createElement("tr");
             var tdLicenseValue = document.createElement("td");
             tdLicenseValue.innerHTML = "{{ row.license }}";
+            tdLicenseValue.setAttribute('style', "color:black");
             var tdColorValue = document.createElement("td");
             tdColorValue.innerHTML = "{{ row.color }}";
+            tdColorValue.setAttribute('style', "color:black");
             var tdModelValue = document.createElement("td");
             tdModelValue.innerHTML = "{{ row.model }}";
+            tdModelValue.setAttribute('style', "color:black");
             var tdMakeValue = document.createElement("td");
             tdMakeValue.innerHTML = "{{ row.make }}";
+            tdMakeValue.setAttribute('style', "color:black");
             var tdLongLatValue = document.createElement("td");
             tdLongLatValue.innerHTML = "{{ row.longlat }}";
+            tdLongLatValue.setAttribute('style', "color:black");
             var tdLocationValue = document.createElement("td");
             tdLocationValue.innerHTML = "{{ row.location }}";
+            tdLocationValue.setAttribute('style', "color:black");
             var tdRatingValue = document.createElement("td");
             tdRatingValue.innerHTML = "{{ row.rating }}";
+            tdRatingValue.setAttribute('style', "color:black");
 
             trValue.appendChild(tdLicenseValue);
             trValue.appendChild(tdColorValue);
@@ -541,22 +541,6 @@
 
             document.getElementsByClassName('container')[0].appendChild(divRow);
         }
-
-        // function customerNavBarDisplay() {
-
-        //     if (sessionStorag.getItem("usertype") == "customer") {
-        //         document.getElementById("customerNavBar").setAttribute("display", "none");
-        //     }
-        // }
-
-        // function managerNavBarDisplay() {
-
-        //     if (sessionStorag.getItem("usertype") == "manager") {
-        //         document.getElementById("managerNavBar").setAttribute("display", "none");
-        //     }
-        // }
-
-
     </script>
 </body>
 
