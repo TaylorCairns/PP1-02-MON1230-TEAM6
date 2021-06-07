@@ -4,7 +4,7 @@ import MySQLdb.cursors
 import hashlib
 from datetime import datetime, timedelta
 import math
-import mpu
+# import mpu
 
 app = Flask(__name__)
 app.secret_key = 'yoursecretkey'
@@ -87,85 +87,74 @@ def register():
 
 
 @app.route('/rent')
-
-
-
 def rent():
     if 'logged' in session:
         if request.method == 'GET':
             user = session['user']
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute('SELECT * FROM bookings WHERE completed = %s AND username = %s', ('No', session['user'],))
+            cursor.execute(
+                'SELECT * FROM bookings WHERE completed = %s AND username = %s', ('No', session['user'],))
             history = cursor.fetchall()
             mysql.connection.commit()
 
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute('SELECT * FROM bookings WHERE completed = %s AND username = %s', ('Yes', session['user'],))
+            cursor.execute(
+                'SELECT * FROM bookings WHERE completed = %s AND username = %s', ('Yes', session['user'],))
             past = cursor.fetchall()
             mysql.connection.commit()
 
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            
+
             cursor.execute('SELECT * FROM cars')
             cars = cursor.fetchall()
-            
+
             session
-            
+
             my_string = ""
-            cout = 0 
+            cout = 0
             for row in cars:
                 labelName = str(row['carId'])
-                my_string = my_string + '&markers=color:' + row['color'] + '%7Clabel:' + labelName + '%7C' + row['longlat'] + '|'
+                my_string = my_string + '&markers=color:' + \
+                    row['color'] + '%7Clabel:' + labelName + \
+                    '%7C' + row['longlat'] + '|'
 
             print(my_string)
-            
 
-
-
-
- 
             return render_template('rent.html', userType=session['type'], userHistory=history, username=user, cars=cars, past=past, my_string=my_string)
 
         return render_template('rent.html', userType=session['type'], username=session['username'])
-        
 
-            
     return redirect(url_for('login'))
-
 
 
 @app.route('/booking', methods=['GET', 'POST'])
 def booking():
     if 'logged' in session:
         if request.method == 'POST':
-                user = session['user']
-                
+            user = session['user']
 
+            carLicense = request.form['carLicense']
+            date = request.form['date']
+            time = request.form['time']
 
-                carLicense = request.form['carLicense']
-                date = request.form['date']
-                time = request.form['time']
+            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            cursor.execute(
+                'SELECT * FROM cars WHERE license = %s', (carLicense, ))
 
+            cars = cursor.fetchone()
+            mysql.connection.commit()
+
+            if cars:
 
                 cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-                cursor.execute('SELECT * FROM cars WHERE license = %s', (carLicense, ))
-
-
-                cars = cursor.fetchone()
+                cursor.execute('INSERT INTO bookings (username, license, date, completed, time) VALUES (%s, %s, %s, %s, %s)', (
+                    user, carLicense, date, 'No', time))
                 mysql.connection.commit()
-
-                
-            
-
-                if cars:
-                    
-                    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-                    cursor.execute('INSERT INTO bookings (username, license, date, completed, time) VALUES (%s, %s, %s, %s, %s)', (user, carLicense, date, 'No', time))
-                    mysql.connection.commit()
 
         return redirect(url_for('rent'))
     else:
         return redirect(url_for('login'))
+
 
 @app.route('/cancelBooking', methods=['GET', 'POST'])
 def cancelBooking():
@@ -174,12 +163,14 @@ def cancelBooking():
             user = session['user']
             cancelId = request.form['cancelId']
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute('SELECT * FROM bookings WHERE id = %s AND username = %s', (cancelId, user))
+            cursor.execute(
+                'SELECT * FROM bookings WHERE id = %s AND username = %s', (cancelId, user))
             cancelBooking = cursor.fetchone()
             mysql.connection.commit()
 
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute('SELECT * FROM bookings WHERE username = %s', (user, ))
+            cursor.execute(
+                'SELECT * FROM bookings WHERE username = %s', (user, ))
 
             history = cursor.fetchall()
             mysql.connection.commit()
@@ -191,19 +182,16 @@ def cancelBooking():
 
             if cancelBooking:
                 cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-                cursor.execute('UPDATE bookings SET completed = %s WHERE id = %s', ('Yes', cancelId))
+                cursor.execute(
+                    'UPDATE bookings SET completed = %s WHERE id = %s', ('Yes', cancelId))
                 mysql.connection.commit()
-                
 
                 return redirect(url_for('rent'))
             return redirect(url_for('rent'))
         return redirect(url_for('rent'))
 
-
-
     else:
         return redirect(url_for('login'))
-
 
 
 @app.route('/logout', methods=['GET', 'POST'])
@@ -265,48 +253,38 @@ def profile():
 
         return render_template('profile.html', typeOfUser=session['type'], user=session['user'])
 
-
     return redirect(url_for('login'))
 
 
-
 @app.route('/nearestcar', methods=['GET', 'POST'])
-
-#def distance(origin, destination):
+# def distance(origin, destination):
 #
 #   lat1, lon1 = origin
 #    lat2, lon2 = destination
 #    radius = 6371  # km
-# 
+#
 #    dlat = math.radians(lat2-lat1)
 #    dlon = math.radians(lon2-lon1)
 #    a = math.sin(dlat/2) * math.sin(dlat/2) + math.cos(math.radians(lat1)) \
 #        * math.cos(math.radians(lat2)) * math.sin(dlon/2) * math.sin(dlon/2)
 #    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
 #    d = radius * c
-# 
+#
 #    return d
- 
-
-#origin = (-37.78451649, 145.125984)              # Bridgeport CT USA
-#destination = (41.0772, 73.4687)         # Darien CT  USA
+# origin = (-37.78451649, 145.125984)              # Bridgeport CT USA
+# destination = (41.0772, 73.4687)         # Darien CT  USA
 #current = (-37.78, 145.12)
-
-#def distance(point1, point2):
+# def distance(point1, point2):
 #    return mpu.haversine_distance(point1, point2)
-
-#def closest(data, this_point):
+# def closest(data, this_point):
 #    return min(data, key=lambda x: distance(this_point, x))
- 
 #print("Distance in KM : {} ".format(distance(origin, destination)))
-
 def nearestcar():
-   if 'logged' in session:
+    if 'logged' in session:
         if request.method == 'POST':
             user = session['user']
             date = datetime.now()
-            
-        
+
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
             cursor.execute('SELECT * FROM cars WHERE NOT inuse = %s', ('Yes'))
             cars = cursor.fetchall()
@@ -317,7 +295,7 @@ def nearestcar():
             minLicense = 1
             current = (-37.78, 145.12)
             #print("distance : {}" .format(distance(origin, destination)))
-            
+
             for row in cars:
                 destination = row['longlat']
                 dist = mpu.haversine_distance(current, destination)
@@ -325,18 +303,19 @@ def nearestcar():
                     minDistance = dist
                     minLongLat = row['longlat']
                     minLicense = row['license']
-                
-                #else: 
+
+                # else:
                     #print("min Lat Long: {}" .format(minLongLat))
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute('SELECT * FROM cars WHERE longLat = %s', (minLongLat))
+            cursor.execute(
+                'SELECT * FROM cars WHERE longLat = %s', (minLongLat))
             minlongLatCar = cursor.fetchone()
             mysql.connection.commit()
 
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute('INSERT INTO bookings (username, license, date, completed) VALUES (%s, %s, %s, %s)', (user, minLicense, date, 'No'))
+            cursor.execute(
+                'INSERT INTO bookings (username, license, date, completed) VALUES (%s, %s, %s, %s)', (user, minLicense, date, 'No'))
             mysql.connection.commit()
-
 
             return redirect(url_for('rent'))
 
@@ -382,9 +361,7 @@ def edituser():
         user = cursor.fetchall()
         return render_template('editUser.html', user=user)
 
-
     return render_template('editUser.html')
-
 
 
 @app.route('/policy')
@@ -491,4 +468,3 @@ def carmanage():
         return render_template('carmanage.html', car=car)
 
     return render_template('carmanage.html')
-
