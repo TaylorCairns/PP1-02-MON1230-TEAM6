@@ -4,6 +4,7 @@ try:
 except Exception as e:
     print("Some Modules are Missing {} ".format(e))
 
+
 class FLASKTEST(unittest.TestCase):
 
     """
@@ -53,7 +54,8 @@ class FLASKTEST(unittest.TestCase):
         tester = app.test_client()
         response = tester.post(
             '/register',
-            data=dict(username="test1", firstName ="test1" , lastName= "test1", email= "test2@test1.com", password="test1", confirmPassword="test1"),
+            data=dict(username="test1", firstName="test1", lastName="test1",
+                      email="test2@test1.com", password="test1", confirmPassword="test1"),
             follow_redirects=True
         )
         self.assertIn(b'Account already exists', response.data)
@@ -101,7 +103,7 @@ class FLASKTEST(unittest.TestCase):
         )
         response = tester.get('/carmanage', follow_redirects=True)
         self.assertIn(b'', response.data)
-    
+
     # 11.Ensure Logout works correctly for Admin
     def test_correct_logout(self):
         tester = app.test_client()
@@ -112,7 +114,7 @@ class FLASKTEST(unittest.TestCase):
         )
         response = tester.get('/logout', follow_redirects=True)
         self.assertIn(b'Login', response.data)
-    
+
     # 12. making a booking
     def test_correct_create_booking(self):
         tester = app.test_client()
@@ -122,16 +124,16 @@ class FLASKTEST(unittest.TestCase):
             follow_redirects=True
         )
         response = tester.get('/booking', follow_redirects=True)
-        
+
         response = tester.post(
             '/booking',
-            data=dict(carLicense="123462", date ="30/05/2021" , time= "21:00"),
+            data=dict(carLicense="123462", date="30/05/2021", time="21:00"),
             follow_redirects=True
         )
         self.assertIn(b'Bookings', response.data)
-    
-    """
-    # 12.Ensure add new car for manager works
+
+    # 13.Ensure add new car for manager works
+
     def test_correct_add_new_car(self):
         tester = app.test_client()
         response = tester.post(
@@ -140,17 +142,35 @@ class FLASKTEST(unittest.TestCase):
             follow_redirects=True
         )
         response = tester.get('/carmanage', follow_redirects=True)
-        
+
         response = tester.post(
             '/carmanage',
-            data=dict(license="999999", color ="blue" , model= "test", make= "car", location="Melbourne", rating="test1"),
+            data=dict(license="999999", color="blue", model="test",
+                      make="car", location="Melbourne", rating="test1"),
             follow_redirects=True
         )
         self.assertIn(b'Add Car', response.data)
-    """
-    
-    """
-    # 13.Ensure delet car car for manager works
+
+    # 14.Ensure edit car for manager works
+
+    def test_correct_edit_car(self):
+        tester = app.test_client()
+        response = tester.post(
+            '/',
+            data=dict(username="manager", password="manager"),
+            follow_redirects=True
+        )
+        response = tester.get('/carmanage', follow_redirects=True)
+
+        response = tester.delete(
+            '/carmanage',
+            data=dict(license="999999", newValue="red", changeSection="color"),
+            follow_redirects=True
+        )
+        self.assertIn(b'Edit Car', response.data)
+
+    # 15.Ensure delete car for manager works
+
     def test_correct_delete_car(self):
         tester = app.test_client()
         response = tester.post(
@@ -159,16 +179,14 @@ class FLASKTEST(unittest.TestCase):
             follow_redirects=True
         )
         response = tester.get('/carmanage', follow_redirects=True)
-        
+
         response = tester.delete(
             '/carmanage',
-            data=dict(license="999999"),
+            data=dict(license="999999", delete="delete"),
             follow_redirects=True
         )
-        self.assertIn(b'Add Car', response.data)
-    """
+        self.assertIn(b'Delete Car', response.data)
 
 
-    
 if __name__ == "__main__":
     unittest.main()
