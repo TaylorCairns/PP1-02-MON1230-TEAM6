@@ -1,0 +1,22 @@
+This file contains all release notes, including unfinished tasks and bugs.
+
+Implemented Features
+-User Booking
+-User cancel/end booking
+-Admin, View and edit users
+-Manager, add, edit, delete cars
+-User Privacy Policy
+-User, view car rental information
+-User, view booking history
+-Register User
+-Login
+-Session authorization
+-Find nearest car
+
+Bugs
+-Adaptive Display for mobile
+  Users will find that the web app doesn't display properly on mobile, but remains functional
+-Booking input validation
+  No format checking for date and time inputs
+
+

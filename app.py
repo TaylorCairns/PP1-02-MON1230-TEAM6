@@ -3,7 +3,7 @@ from flask_mysqldb import MySQL
 import MySQLdb.cursors
 import hashlib
 from datetime import datetime, timedelta
-import math
+
 
 app = Flask(__name__)
 app.secret_key = 'yoursecretkey'
@@ -122,8 +122,6 @@ def rent():
                     row['color'] + '%7Clabel:' + labelName + \
                     '%7C' + row['longlat'] + '|'
 
-
-
             return render_template('rent.html', userType=session['type'], userHistory=history, username=user, cars=cars, past=past, my_string=my_string)
 
         return render_template('rent.html', userType=session['type'], username=session['username'])
@@ -157,6 +155,7 @@ def booking():
                 cursor.execute('INSERT INTO bookings (username, license, date, completed, time) VALUES (%s, %s, %s, %s, %s)', (
                     user, carLicense, date, 'No', time))
                 mysql.connection.commit()
+
 
         return redirect(url_for('rent'))
     else:
@@ -211,7 +210,6 @@ def cancelBooking():
 def logout():
     if 'logged' in session:
 
-
         session.pop('logged', None)
         session.pop('username', None)
         session.pop('userType', None)
@@ -234,11 +232,10 @@ def profile():
 
         msg = ''
         if request.method == 'POST' and 'newValue' in request.form and 'changeSection' in request.form:
-            #selectUser = request.form['selectUser']
+            
             changeSection = request.form['changeSection']
             newValue = request.form['newValue']
 
-            print(changeSection)
 
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
             if changeSection == 'firstname':
@@ -354,7 +351,7 @@ def edituser():
             changeSection = request.form['changeSection']
             newValue = request.form['newValue']
 
-            print(changeSection)
+            
 
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
             if changeSection == 'firstname':
@@ -400,7 +397,7 @@ def carmanage():
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
             cursor.execute('SELECT * FROM cars')
             car = cursor.fetchall()
-            print(car)
+            
             return render_template('carmanage.html', car=car)
 
         msg = ''
@@ -419,18 +416,6 @@ def carmanage():
             val = (license, color, model, make, location, rating)
             cursor.execute(sql, val)
             mysql.connection.commit()
-            # if changeSection == 'lastname':
-            #     cursor.execute(
-            #         'UPDATE users SET lastname = %s WHERE username = %s', (newValue, selectUser))
-            #     mysql.connection.commit()
-            # if changeSection == 'userType':
-            #     cursor.execute(
-            #         'UPDATE users SET userType = %s WHERE username = %s', (newValue, selectUser))
-            #     mysql.connection.commit()
-            # if changeSection == 'licenseNo':
-            #     cursor.execute(
-            #         'UPDATE users SET licenseNo = %s WHERE username = %s', (newValue, selectUser))
-            #     mysql.connection.commit()
 
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
             cursor.execute('SELECT * FROM cars')
@@ -493,5 +478,7 @@ def carmanage():
 
         return render_template('carmanage.html')
 
+
     return render_template('carmanage.html')
+
 
