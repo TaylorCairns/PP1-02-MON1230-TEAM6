@@ -6,7 +6,37 @@
     <title>genRental</title>
     <style>
         .carmanagebox {
-            width: 1000px;
+            /* width: 1000px; */
+            width: auto;
+        }
+
+        #cars {
+            background-color: #1A2226;
+            border: none;
+            border-bottom: 2px solid #0DB8DE;
+            border-top: 0px;
+            border-radius: 0px;
+            font-weight: bold;
+            outline: 0;
+            padding-left: 0px;
+            margin-bottom: 20px;
+            border: 0;
+            background: none;
+            display: block;
+            margin: 20px auto;
+            text-align: center;
+            border: 2px solid #3498db;
+            padding: 14px 10px;
+            width: 200px;
+            border-radius: 24px;
+            transition: 0.25s;
+            outline: none;
+            color: white;
+            text-transform: inherit;
+        }
+
+        .carOptions {
+            color: #021730;
         }
 
         .carmanageformbox {
@@ -15,8 +45,10 @@
             background: rgb(11, 110, 133);
             text-align: center;
             box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-            width: 1000px;
+            width: auto;
+            /* width: 1000px; */
             padding: 50px;
+            /* padding-bottom: 100px; */
         }
     </style>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -69,8 +101,8 @@
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
 
-<body>
-    <div class="btn-group" style="width: 50%; display: block" id="navbarButtons">
+<body onload="openAddForm()">
+    <div class="btn-group" style="display: block; text-align: center;" id="navbarButtons">
         <!--div for buttons related to car manage functions-->
         <button class="open-button" onclick="openAddForm()">Add Car</button>
         <!--button for run javascript of create add car form into the web-->
@@ -82,174 +114,56 @@
         delete car form into the web-->
     </div>
 
-    <div class="container"></div>
+    <div class="container" style="text-align: center; height:727.667px"></div>
 
     <script>
         function openAddForm() {        //script for create add car form
             const form = document.getElementsByClassName('container')[0];   //get the 'container' first element
             removeChild(form);                                              //clean the element
 
-            var divRow = document.createElement("div");     //create element
-            divRow.setAttribute('class', "carmanagebox");   //set attribute of this element
+            const div = document.createElement("div");     //create element
+            div.setAttribute("style", "text-align: center;")
+            div.innerHTML = `
+            <div class="col-lg-3 col-md-2"></div>
+            <div class="carmanageformbox">
+            <div class="col-lg-12 login-title"> Add Car</div>
+            <div class="col-lg-12 login-form">
+            <form method="post" action="{{url_for('carmanage') }}">
+                <div class="form-group">
+                    <label for="carLicense" class="form-control-label">Car License</label>
+                    <input type="text" class="form-control" placeholder="Enter Car License" name="license" required></input>
+                </div>
+                <div class="form-group">
+                    <label for="carModel" class="form-control-label">Car Model</label>
+                    <input type="text" class="form-control" placeholder="Enter Car Model" name="model" required></input>
+                </div>
+                <div class="form-group">
+                    <label for="carColor" class="form-control-label">Car Color</label>
+                    <input type="text" class="form-control" placeholder="Enter Car Color" name="color" required></input>
+                </div>
+                <div class="form-group">
+                    <label for="carMake" class="form-control-label">Car Make</label>
+                    <input type="text" class="form-control" placeholder="Enter Car Make" name="make" required></input>
+                </div>
+                <div class="form-group">
+                    <label for="carModel" class="form-control-label">Car Location</label>
+                    <input type="radio" id="Melbourne" name="location" value="Melbourne" required>Melbourne</input>
+                    <input style="margin-left:30px" type="radio" id="Sydney" name="location" value="Sydney" required>Sydney</input>
+                </div>
+                <div class="form-group">
+                    <label for="carRating" class="form-control-label">Car Rating</label>
+                    <input type="text" class="form-control" placeholder="Enter Car Rating" name="rating" required></input>
+                </div>
+                <div style="text-align:center">
+                    <button type="submit" class="btn btn-outline-primary">Add a car</button>
+                </div>
+                </form>
+            </div>
+        </div>
+        </div>
+            `;
 
-            var divAlign = document.createElement("div");
-            divAlign.setAttribute('class', "col-lg-3 col-md-2");
-
-            var divLoginBox = document.createElement("div");
-            divLoginBox.setAttribute('class', "carmanageformbox");
-
-            var divTitle = document.createElement("div");
-            divTitle.setAttribute('class', "col-lg-12 login-title");
-            divTitle.innerHTML = "Add Car";
-
-            var divLoginForm = document.createElement("div");
-            divLoginForm.setAttribute('class', "col-lg-12 login-form");
-
-            divRow.appendChild(divAlign);                   //append element
-            divRow.appendChild(divLoginBox);
-            divLoginBox.appendChild(divTitle);
-
-            var f = document.createElement("form");
-            f.setAttribute('method', "post");
-            f.setAttribute('action', "{{ url_for('carmanage') }}");
-
-            var divCarLicense = document.createElement("div");
-            divCarLicense.setAttribute('class', "form-group");
-            var carLicenseLabel = document.createElement("label");
-            carLicenseLabel.setAttribute('for', "carLicense");
-            carLicenseLabel.setAttribute('class', "form-control-label");
-            carLicenseLabel.innerHTML = "Car License";
-            divCarLicense.appendChild(carLicenseLabel);
-
-            var carLicenseInput = document.createElement("input");
-            carLicenseInput.setAttribute('type', "text");
-            carLicenseInput.setAttribute('class', "form-control");
-            carLicenseInput.setAttribute('placeholder', "Enter Car License")
-            carLicenseInput.setAttribute('name', "license");
-            divCarLicense.appendChild(carLicenseInput);
-
-            var divCarModel = document.createElement("div");
-            divCarModel.setAttribute('class', "form-group");
-            var carModelLabel = document.createElement("label");
-            carModelLabel.setAttribute('for', "carModel");
-            carModelLabel.setAttribute('class', "form-control-label");
-            carModelLabel.innerHTML = "Car Model";
-            divCarModel.appendChild(carModelLabel);
-
-            var carModelInput = document.createElement("input");
-            carModelInput.setAttribute('type', "text");
-            carModelInput.setAttribute('class', "form-control");
-            carModelInput.setAttribute('placeholder', "Enter Car Model")
-            carModelInput.setAttribute('name', "model");
-            divCarModel.appendChild(carModelInput);
-
-            var divCarColor = document.createElement("div");
-            divCarColor.setAttribute('class', "form-group");
-            var carColorLabel = document.createElement("label");
-            carColorLabel.setAttribute('for', "carColor");
-            carColorLabel.setAttribute('class', "form-control-label");
-            carColorLabel.innerHTML = "Car Color";
-            divCarColor.appendChild(carColorLabel);
-
-            var carColorInput = document.createElement("input");
-            carColorInput.setAttribute('type', "text");
-            carColorInput.setAttribute('class', "form-control");
-            carColorInput.setAttribute('placeholder', "Enter Car Color")
-            carColorInput.setAttribute('name', "color");
-            divCarColor.appendChild(carColorInput);
-
-            var divCarMake = document.createElement("div");
-            divCarMake.setAttribute('class', "form-group");
-
-            var carMakeLabel = document.createElement("label");
-            carMakeLabel.setAttribute('for', "carMake");
-            carMakeLabel.setAttribute('class', "form-control-label");
-            carMakeLabel.innerHTML = "Car Make";
-            divCarMake.appendChild(carMakeLabel);
-
-            var carMakeInput = document.createElement("input");
-            carMakeInput.setAttribute('type', "text");
-            carMakeInput.setAttribute('class', "form-control");
-            carMakeInput.setAttribute('placeholder', "Enter Car Make")
-            carMakeInput.setAttribute('name', "make");
-            divCarMake.appendChild(carMakeInput);
-
-            var divCarLocation = document.createElement("div");
-            divCarMake.setAttribute('class', "form-group");
-
-            var br = document.createElement("br");
-
-            var carLocationLabel = document.createElement("p");
-            carLocationLabel.setAttribute('for', "carModel");
-            carLocationLabel.setAttribute('class', "form-control-label");
-            carLocationLabel.innerHTML = "Car Location";
-            divCarLocation.appendChild(carLocationLabel);
-
-            var carLocationMelbouneRadio = document.createElement("input");
-            carLocationMelbouneRadio.setAttribute('type', "radio");
-            carLocationMelbouneRadio.setAttribute('id', "Melbourne");
-            carLocationMelbouneRadio.setAttribute('name', "location");
-            carLocationMelbouneRadio.setAttribute('value', "Melbourne");
-            divCarLocation.appendChild(carLocationMelbouneRadio);
-
-            var carLocationMelbouneLabel = document.createElement("label");
-            carLocationMelbouneLabel.setAttribute('for', "Melbourne");
-            carLocationMelbouneLabel.setAttribute('style', "margin-right: 50px");
-            carLocationMelbouneLabel.setAttribute('class', "form-control-label");
-            carLocationMelbouneLabel.innerHTML = "Melbourne";
-            divCarLocation.appendChild(carLocationMelbouneLabel);
-            divCarLocation.appendChild(br);
-
-            var carLocationSydneyRadio = document.createElement("input");
-            carLocationSydneyRadio.setAttribute('type', "radio");
-            carLocationSydneyRadio.setAttribute('id', "Sydney");
-            carLocationSydneyRadio.setAttribute('name', "location");
-            carLocationSydneyRadio.setAttribute('value', "Sydney");
-            divCarLocation.appendChild(carLocationSydneyRadio);
-
-            var carLocationSydneyLabel = document.createElement("label");
-            carLocationSydneyLabel.setAttribute('for', "Sydney");
-            carLocationSydneyLabel.setAttribute('class', "form-control-label");
-            carLocationSydneyLabel.innerHTML = "Sydney";
-            divCarLocation.appendChild(carLocationSydneyLabel);
-
-            var divCarRating = document.createElement("div");
-            divCarRating.setAttribute('class', "form-group");
-            var carRatingLabel = document.createElement("label");
-            carRatingLabel.setAttribute('for', "carRating");
-            carRatingLabel.setAttribute('class', "form-control-label");
-            carRatingLabel.innerHTML = "Car Rating";
-            divCarRating.appendChild(carRatingLabel);
-
-            var carRatingInput = document.createElement("input");
-            carRatingInput.setAttribute('type', "number");
-            carRatingInput.setAttribute('class', "form-control");
-            carRatingInput.setAttribute('placeholder', "Enter Car Rating")
-            carRatingInput.setAttribute('name', "rating");
-            divCarRating.appendChild(carRatingInput);
-
-            var divSubmitButton = document.createElement("div");
-            divSubmitButton.setAttribute('class', "col-lg-6 login-btm login-button");
-            var submitButton = document.createElement("button");
-            submitButton.setAttribute('type', "submit");
-            submitButton.setAttribute('class', "btn btn-outline-primary")
-            submitButton.setAttribute('value', "Submit");
-            submitButton.innerText = "Submit";
-            divSubmitButton.appendChild(submitButton);
-
-            f.appendChild(divCarLicense);
-            f.appendChild(divCarModel);
-            f.appendChild(divCarColor);
-            f.appendChild(divCarMake);
-            f.appendChild(divCarLocation);
-            f.appendChild(br);
-            f.appendChild(divCarRating);
-            f.appendChild(divSubmitButton);
-
-            divLoginForm.appendChild(f);
-            divLoginBox.appendChild(divLoginForm);
-
-            document.getElementsByClassName('container')[0].appendChild(divRow);
+            document.getElementsByClassName('container')[0].appendChild(div);
         }
 
         function removeChild(parent) {              //delete the element from parent element
@@ -258,289 +172,114 @@
             }
         }
 
-        function openEditForm() {                   //script for create edit car form
-            const form = document.getElementsByClassName('container')[0];
-            removeChild(form);
+        function openEditForm() {        //script for create add car form
+            const form = document.getElementsByClassName('container')[0];   //get the 'container' first element
+            removeChild(form);                                              //clean the element
 
-            var divRow = document.createElement("div");
-            divRow.setAttribute('class', "carmanagebox");
-
-            var divAlign = document.createElement("div");
-            divAlign.setAttribute('class', "col-lg-3 col-md-2");
-
-            var divLoginBox = document.createElement("div");
-
-            divLoginBox.setAttribute('class', "carmanageformbox");
-
-
-            var divTitle = document.createElement("div");
-            divTitle.setAttribute('class', "col-lg-12 login-title");
-            divTitle.innerHTML = "Edit Car";
-
-            var divLoginForm = document.createElement("div");
-            divLoginForm.setAttribute('class', "col-lg-12 login-form");
-
-            divRow.appendChild(divAlign);
-            divRow.appendChild(divLoginBox);
-            divLoginBox.appendChild(divTitle);
-
-            var f = document.createElement("form");
-            f.setAttribute('method', "post");
-            f.setAttribute('action', "{{ url_for('carmanage') }}");
-
-            var selection = document.createElement("select");
-            selection.setAttribute('name', "changeSection");
-            selection.setAttribute('id', "cars")
-            var optionLicense = document.createElement("option");
-            optionLicense.setAttribute('value', "license");
-            optionLicense.innerHTML = "License";
-            var optionColor = document.createElement("option");
-            optionColor.setAttribute('value', "color");
-            optionColor.innerHTML = "Color";
-            var optionModel = document.createElement("option");
-            optionModel.setAttribute('value', "model");
-            optionModel.innerHTML = "Model";
-            var optionMake = document.createElement("option");
-            optionMake.setAttribute('value', "make");
-            optionMake.innerHTML = "Make";
-            var optionLongLat = document.createElement("option");
-            optionLongLat.setAttribute('value', "longlat");
-            optionLongLat.innerHTML = "Longlat";
-            var optionLocation = document.createElement("option");
-            optionLocation.setAttribute('value', "location");
-            optionLocation.innerHTML = "Location";
-            var optionRating = document.createElement("option");
-            optionRating.setAttribute('value', "rating");
-            optionRating.innerHTML = "Rating";
-
-            selection.appendChild(optionLicense);
-            selection.appendChild(optionColor);
-            selection.appendChild(optionModel);
-            selection.appendChild(optionMake);
-            selection.appendChild(optionLongLat);
-            selection.appendChild(optionLocation);
-            selection.appendChild(optionRating);
-            f.appendChild(selection);
-
-            var selectLicenseInput = document.createElement("input");
-            selectLicenseInput.setAttribute('type', "text");
-            selectLicenseInput.setAttribute('name', "license");
-            selectLicenseInput.setAttribute('placeholder', "Please input license");
-
-            var newValueInput = document.createElement("input");
-            newValueInput.setAttribute('type', "text");
-            newValueInput.setAttribute('name', "newValue");
-            newValueInput.setAttribute('placeholder', "Please input new value");
-
-            var divSubmitButton = document.createElement("div");
-            divSubmitButton.setAttribute('class', "col-lg-6 login-btm login-button");
-            var submitButton = document.createElement("button");
-            submitButton.setAttribute('type', "submit");
-            submitButton.setAttribute('class', "btn btn-outline-primary")
-            submitButton.setAttribute('value', "Submit");
-            submitButton.innerText = "Submit";
-
-            f.appendChild(selectLicenseInput);
-            f.appendChild(newValueInput);
-            f.appendChild(submitButton);
-
-            var t = document.createElement("table");
-            var trTitle = document.createElement("tr")
-
-            var tdLicense = document.createElement("td");
-            tdLicense.innerHTML = "License";
-            trTitle.appendChild(tdLicense);
-            var tdColor = document.createElement("td");
-            tdColor.innerHTML = "Color";
-            trTitle.appendChild(tdColor);
-            var tdModel = document.createElement("td");
-            tdModel.innerHTML = "Model";
-            trTitle.appendChild(tdModel);
-            var tdMake = document.createElement("td");
-            tdMake.innerHTML = "Make";
-            trTitle.appendChild(tdMake);
-            var tdLongLat = document.createElement("td");
-            tdLongLat.innerHTML = "Longlat";
-            trTitle.appendChild(tdLongLat);
-            var tdLocation = document.createElement("td");
-            tdLocation.innerHTML = "Location";
-            trTitle.appendChild(tdLocation);
-            var tdRating = document.createElement("td");
-            tdRating.innerHTML = "Rating";
-            trTitle.appendChild(tdRating);
-            t.appendChild(trTitle);
-
-            var forStart = document.createElement("python");        //python command in javascript
-            forStart = "{% for row in car %}";
-            t.append(forStart);
-
-            var trValue = document.createElement("tr");
-            var tdLicenseValue = document.createElement("td");
-            tdLicenseValue.innerHTML = "{{ row.license }}";
-            tdLicenseValue.setAttribute('style', "color:black");
-            var tdColorValue = document.createElement("td");
-            tdColorValue.innerHTML = "{{ row.color }}";
-            tdColorValue.setAttribute('style', "color:black");
-            var tdModelValue = document.createElement("td");
-            tdModelValue.innerHTML = "{{ row.model }}";
-            tdModelValue.setAttribute('style', "color:black");
-            var tdMakeValue = document.createElement("td");
-            tdMakeValue.innerHTML = "{{ row.make }}";
-            tdMakeValue.setAttribute('style', "color:black");
-            var tdLongLatValue = document.createElement("td");
-            tdLongLatValue.innerHTML = "{{ row.longlat }}";
-            tdLongLatValue.setAttribute('style', "color:black");
-            var tdLocationValue = document.createElement("td");
-            tdLocationValue.innerHTML = "{{ row.location }}";
-            tdLocationValue.setAttribute('style', "color:black");
-            var tdRatingValue = document.createElement("td");
-            tdRatingValue.innerHTML = "{{ row.rating }}";
-            tdRatingValue.setAttribute('style', "color:black");
-
-            trValue.appendChild(tdLicenseValue);
-            trValue.appendChild(tdColorValue);
-            trValue.appendChild(tdModelValue);
-            trValue.appendChild(tdMakeValue);
-            trValue.appendChild(tdLongLatValue);
-            trValue.appendChild(tdLocationValue);
-            trValue.appendChild(tdRatingValue);
-
-            t.appendChild(trValue);
-
-            var forEnd = document.createElement("python");
-            forEnd = "{% endfor %}";
-            t.append(forEnd);
-
-            divLoginForm.appendChild(f);
-            divLoginForm.appendChild(t);
-            divLoginBox.appendChild(divLoginForm);
-
-            document.getElementsByClassName('container')[0].appendChild(divRow);
+            const div = document.createElement("div");     //create element
+            div.setAttribute("style", "text-align: center;")
+            div.innerHTML = `
+            <div class="col-lg-3 col-md-2"></div>
+            <div class="carmanageformbox">
+                <div class="col-lg-12 login-title">Edit Car</div>
+                <div class="col-lg-12 login-form">
+                    <form method="post" action="{{url_for('carmanage') }}">
+                        <div class="select">
+                            <select name="changeSelection" id="cars">
+                                <option class="carOptions" value="license">License</option>
+                                <option class="carOptions" value="model">Model</option>
+                                <option class="carOptions" value="color">Color</option>
+                                <option class="carOptions" value="make">Make</option>
+                                <option class="carOptions" value="longlat">Longlat</option>
+                                <option class="carOptions" value="location">Location</option>
+                                <option class="carOptions" value="rating">Rating</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label" style="visibility:hidden">Blank</label>
+                            <input type="text" class="form-control" placeholder="Enter Car License" name="license" required></input>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Enter new Value" name="newValue" required></input>
+                        </div>
+                        <div style="text-align:center">
+                            <button type="submit" class="btn btn-outline-primary">Update the car</button>
+                        </div>
+                    </form>
+                </div>
+            <div class="col-lg-1 col-md-4 table-box" style="visibility:hidden;"></div>
+            <div class="table-form" style="overflow-x:auto;"></div>
+            <table id="carTable">
+                <TR>
+                    <TH style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">License</TH>
+                    <TH style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">Make</TH>
+                    <TH style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">Model</TH>
+                    <TH style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">Colour</TH>
+                    <TH style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">Rating</TH>
+                    <TH style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">Location</TH>
+                </TR>
+                {% for row in car %}
+                <TR>
+                    <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">{{row.license}}</TD>
+                    <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">{{row.make}}</TD>
+                    <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">{{row.model}}</TD>
+                    <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">{{row.color}}</TD>
+                    <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">{{row.rating}}</TD>
+                    <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">{{row.location}}</TD>
+                </TR>
+                {% endfor %}
+                </table>
+            </div>
+            `;
+            document.getElementsByClassName('container')[0].appendChild(div);
         }
 
-        function openDeleteForm() {                     //script for create delte car form
-            const form = document.getElementsByClassName('container')[0];
-            removeChild(form);
+        function openDeleteForm() {        //script for create add car form
+            const form = document.getElementsByClassName('container')[0];   //get the 'container' first element
+            removeChild(form);                                              //clean the element
 
-            var divRow = document.createElement("div");
-            divRow.setAttribute('class', "carmanagebox");
-
-            var divAlign = document.createElement("div");
-            divAlign.setAttribute('class', "col-lg-3 col-md-2");
-
-            var divLoginBox = document.createElement("div");
-            divLoginBox.setAttribute('class', "carmanageformbox");
-
-            var divTitle = document.createElement("div");
-            divTitle.setAttribute('class', "col-lg-12 login-title");
-            divTitle.innerHTML = "Delete Car";
-
-            var divLoginForm = document.createElement("div");
-            divLoginForm.setAttribute('class', "col-lg-12 login-form");
-
-            divRow.appendChild(divAlign);
-            divRow.appendChild(divLoginBox);
-            divLoginBox.appendChild(divTitle);
-
-            var f = document.createElement("form");
-            f.setAttribute('method', "POST");
-            f.setAttribute('action', "{{ url_for('carmanage') }}");
-
-            var selectLicenseInput = document.createElement("input");
-            selectLicenseInput.setAttribute('type', "text");
-            selectLicenseInput.setAttribute('name', "license");
-            selectLicenseInput.setAttribute('placeholder', "Please input license");
-
-            var invisibleLabel = document.createElement("input");
-            invisibleLabel.setAttribute('name', "delete");
-            invisibleLabel.setAttribute('value', "delete");
-            invisibleLabel.setAttribute('style', "display: none");
-
-            var divSubmitButton = document.createElement("div");
-            divSubmitButton.setAttribute('class', "col-lg-6 login-btm login-button");
-            var submitButton = document.createElement("button");
-            submitButton.setAttribute('type', "submit");
-            submitButton.setAttribute('class', "btn btn-outline-primary")
-            submitButton.setAttribute('value', "Submit");
-            submitButton.innerText = "Submit";
-
-            f.appendChild(selectLicenseInput);
-            f.appendChild(invisibleLabel);
-            f.appendChild(submitButton);
-
-            var t = document.createElement("table");
-            var trTitle = document.createElement("tr")
-
-            var tdLicense = document.createElement("td");
-            tdLicense.innerHTML = "License";
-            trTitle.appendChild(tdLicense);
-            var tdColor = document.createElement("td");
-            tdColor.innerHTML = "Color";
-            trTitle.appendChild(tdColor);
-            var tdModel = document.createElement("td");
-            tdModel.innerHTML = "Model";
-            trTitle.appendChild(tdModel);
-            var tdMake = document.createElement("td");
-            tdMake.innerHTML = "Make";
-            trTitle.appendChild(tdMake);
-            var tdLongLat = document.createElement("td");
-            tdLongLat.innerHTML = "Longlat";
-            trTitle.appendChild(tdLongLat);
-            var tdLocation = document.createElement("td");
-            tdLocation.innerHTML = "Location";
-            trTitle.appendChild(tdLocation);
-            var tdRating = document.createElement("td");
-            tdRating.innerHTML = "Rating";
-            trTitle.appendChild(tdRating);
-            t.appendChild(trTitle);
-
-            var forStart = document.createElement("python");
-            forStart = "{% for row in car %}";
-            t.append(forStart);
-
-            var trValue = document.createElement("tr");
-            var tdLicenseValue = document.createElement("td");
-            tdLicenseValue.innerHTML = "{{ row.license }}";
-            tdLicenseValue.setAttribute('style', "color:black");
-            var tdColorValue = document.createElement("td");
-            tdColorValue.innerHTML = "{{ row.color }}";
-            tdColorValue.setAttribute('style', "color:black");
-            var tdModelValue = document.createElement("td");
-            tdModelValue.innerHTML = "{{ row.model }}";
-            tdModelValue.setAttribute('style', "color:black");
-            var tdMakeValue = document.createElement("td");
-            tdMakeValue.innerHTML = "{{ row.make }}";
-            tdMakeValue.setAttribute('style', "color:black");
-            var tdLongLatValue = document.createElement("td");
-            tdLongLatValue.innerHTML = "{{ row.longlat }}";
-            tdLongLatValue.setAttribute('style', "color:black");
-            var tdLocationValue = document.createElement("td");
-            tdLocationValue.innerHTML = "{{ row.location }}";
-            tdLocationValue.setAttribute('style', "color:black");
-            var tdRatingValue = document.createElement("td");
-            tdRatingValue.innerHTML = "{{ row.rating }}";
-            tdRatingValue.setAttribute('style', "color:black");
-
-            trValue.appendChild(tdLicenseValue);
-            trValue.appendChild(tdColorValue);
-            trValue.appendChild(tdModelValue);
-            trValue.appendChild(tdMakeValue);
-            trValue.appendChild(tdLongLatValue);
-            trValue.appendChild(tdLocationValue);
-            trValue.appendChild(tdRatingValue);
-
-            t.appendChild(trValue);
-
-            var forEnd = document.createElement("python");
-            forEnd = "{% endfor %}";
-            t.append(forEnd);
-
-            divLoginForm.appendChild(f);
-            divLoginForm.appendChild(t);
-            divLoginBox.appendChild(divLoginForm);
-
-            document.getElementsByClassName('container')[0].appendChild(divRow);
+            const div = document.createElement("div");     //create element
+            div.setAttribute("style", "text-align: center;")
+            div.innerHTML = `
+            <div class="col-lg-3 col-md-2"></div>
+            <div class="carmanageformbox">
+                <div class="col-lg-12 login-title">Delete Car</div>
+                <div class="col-lg-1 col-md-4 table-box" style="visibility:hidden;"></div>
+                <div class="table-form" style="overflow-x:auto;"></div>
+                    <table id="carTable">
+                        <TR>
+                            <TH style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">License</TH>
+                            <TH style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">Make</TH>
+                            <TH style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">Model</TH>
+                            <TH style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">Colour</TH>
+                            <TH style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">Rating</TH>
+                            <TH style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">Location</TH>
+                        </TR>
+                        {% for row in car %}
+                        <TR>
+                            <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">{{row.license}}</TD>
+                            <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">{{row.make}}</TD>
+                            <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">{{row.model}}</TD>
+                            <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">{{row.color}}</TD>
+                            <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">{{row.rating}}</TD>
+                            <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">{{row.location}}</TD>
+                        </TR>
+                        {% endfor %}
+                    </table>
+                <div class="col-lg-12 login-form">
+                    <form method="post" action="{{url_for('carmanage') }}">
+                        <div class="form-group">
+                            <label class="form-control-label" style="visibility:hidden">Blank</label>
+                            <input type="text" class="form-control" placeholder="Enter Car License" name="license" required></input>
+                            <button type="submit" class="btn btn-outline-primary">Delete the car</button>
+                        </div>
+                        <input name="delete" value="delete" style="visibility:hidden"
+                    </form>
+                </div>
+            `;
+            document.getElementsByClassName('container')[0].appendChild(div);
         }
+
     </script>
 </body>
 
