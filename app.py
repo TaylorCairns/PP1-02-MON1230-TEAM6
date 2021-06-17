@@ -3,6 +3,7 @@ from flask_mysqldb import MySQL
 import MySQLdb.cursors
 import hashlib
 from datetime import datetime, timedelta
+import geocoder
 
 
 app = Flask(__name__)
@@ -115,11 +116,15 @@ def rent():
             carsLoc = cursor.fetchall()
 
             session
+            
+            #Gets current location from ip address
+            g = geocoder.ip('me')
+            print(g.lat)
 
-            my_string = ""
+            cur = str(g.lat) + ',' + str(g.lng)
+            print(cur)
 
-            cout = 0
-            my_string = ""
+            my_string = '&markers=color:green%7Clabel:C%7C' + cur + '|'
             for row in carsLoc:
                 labelName = str(row['carId'])
                 my_string = my_string + '&markers=color:' + row['color'] + '%7Clabel:' + labelName + '%7C' + row['longlat'] + '|'
@@ -269,51 +274,6 @@ def profile():
 
 
 
-@app.route('/nearestcar', methods=['GET', 'POST'])
-def nearestcar():
-    if 'logged' in session:
-        if request.method == 'POST':
-            user = session['user']
-            date = datetime.now()
-
-            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute('SELECT * FROM cars WHERE NOT inuse = %s', ('Yes'))
-            cars = cursor.fetchall()
-            mysql.connection.commit()
-
-            minDistance = 900000000
-            minLongLat = 0
-            minLicense = 1
-            current = (-37.78, 145.12)
-            #print("distance : {}" .format(distance(origin, destination)))
-
-            for row in cars:
-                destination = row['longlat']
-                dist = mpu.haversine_distance(current, destination)
-                if dist < minDistance:
-                    minDistance = dist
-                    minLongLat = row['longlat']
-                    minLicense = row['license']
-
-                # else:
-                    #print("min Lat Long: {}" .format(minLongLat))
-            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute(
-                'SELECT * FROM cars WHERE longLat = %s', (minLongLat))
-            minlongLatCar = cursor.fetchone()
-            mysql.connection.commit()
-
-            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute(
-                'INSERT INTO bookings (username, license, date, completed) VALUES (%s, %s, %s, %s)', (user, minLicense, date, 'No'))
-            mysql.connection.commit()
-
-            return redirect(url_for('rent'))
-
-
-
-#Nearestcar Function uses long lat data with google api to display car locations on map.
-
 @app.route('/edituser', methods=['GET', 'POST'])
 def edituser():
     if 'admin' in session['type'] and 'logged' in session:
@@ -437,7 +397,7 @@ def carmanage():
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
             cursor.execute('SELECT * FROM cars')
             car = cursor.fetchall()
-            return render_template('carmanage.html', car=car)
+            return redirect(url_for('carmanage', car=car))
 
         if request.method == 'POST' and 'license' in request.form and 'delete' in request.form:
             license = request.form['license']
@@ -446,12 +406,13 @@ def carmanage():
             sql = "DELETE FROM cars WHERE license = %s"
             val = ([license])
             cursor.execute(sql, val)
+            print(sql)
             mysql.connection.commit()
 
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
             cursor.execute('SELECT * FROM cars')
             car = cursor.fetchall()
-            return render_template('carmanage.html', car=car)
+            return redirect(url_for('profile', car=car))
 
         return render_template('carmanage.html')
 

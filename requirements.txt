@@ -6,3 +6,4 @@ google-auth-oauthlib
 Datetime
 mysqlclient
 gunicorn
+geocoder
