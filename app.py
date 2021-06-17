@@ -110,17 +110,19 @@ def rent():
             cursor.execute('SELECT * FROM cars')
             cars = cursor.fetchall()
 
+            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            cursor.execute('SELECT * FROM cars WHERE NOT longlat IS NULL')
+            carsLoc = cursor.fetchall()
+
             session
 
             my_string = ""
 
             cout = 0
-            for row in cars:
-
+            my_string = ""
+            for row in carsLoc:
                 labelName = str(row['carId'])
-                my_string = my_string + '&markers=color:' + \
-                    row['color'] + '%7Clabel:' + labelName + \
-                    '%7C' + row['longlat'] + '|'
+                my_string = my_string + '&markers=color:' + row['color'] + '%7Clabel:' + labelName + '%7C' + row['longlat'] + '|'
 
             return render_template('rent.html', userType=session['type'], userHistory=history, username=user, cars=cars, past=past, my_string=my_string)
 
@@ -268,28 +270,6 @@ def profile():
 
 
 @app.route('/nearestcar', methods=['GET', 'POST'])
-# def distance(origin, destination):
-#
-#   lat1, lon1 = origin
-#    lat2, lon2 = destination
-#    radius = 6371  # km
-#
-#    dlat = math.radians(lat2-lat1)
-#    dlon = math.radians(lon2-lon1)
-#    a = math.sin(dlat/2) * math.sin(dlat/2) + math.cos(math.radians(lat1)) \
-#        * math.cos(math.radians(lat2)) * math.sin(dlon/2) * math.sin(dlon/2)
-#    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
-#    d = radius * c
-#
-#    return d
-# origin = (-37.78451649, 145.125984)              # Bridgeport CT USA
-# destination = (41.0772, 73.4687)         # Darien CT  USA
-#current = (-37.78, 145.12)
-# def distance(point1, point2):
-#    return mpu.haversine_distance(point1, point2)
-# def closest(data, this_point):
-#    return min(data, key=lambda x: distance(this_point, x))
-#print("Distance in KM : {} ".format(distance(origin, destination)))
 def nearestcar():
     if 'logged' in session:
         if request.method == 'POST':
@@ -370,9 +350,6 @@ def edituser():
                 cursor.execute(
                     'UPDATE users SET licenseNo = %s WHERE username = %s', (newValue, selectUser))
                 mysql.connection.commit()
-
-
-    return render_template('editUser.html')
 
 
         return render_template('editUser.html')
@@ -479,6 +456,6 @@ def carmanage():
         return render_template('carmanage.html')
 
 
-    return render_template('carmanage.html')
+    return redirect(url_for('login'))
 
 
