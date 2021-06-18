@@ -119,10 +119,10 @@ def rent():
             
             #Gets current location from ip address
             g = geocoder.ip('me')
-            print(g.lat)
+            
 
             cur = str(g.lat) + ',' + str(g.lng)
-            print(cur)
+            
 
             my_string = '&markers=color:green%7Clabel:C%7C' + cur + '|'
             for row in carsLoc:
