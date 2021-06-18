@@ -182,7 +182,7 @@ class FLASKTEST(unittest.TestCase):
 
         response = tester.delete(
             '/carmanage',
-            data=dict(license="999999", delete="delete"),
+            data=dict(license="999999"),
             follow_redirects=True
         )
         self.assertIn(b'Delete Car', response.data)
