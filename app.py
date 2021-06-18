@@ -66,7 +66,7 @@ def register():
         hashPass = hashlib.sha256(saltPass.encode())
         encryptPass = hashPass.hexdigest()
 
-        # Chec if account exists
+        # Check if account exists
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM users WHERE username = %s', (username,))
         acc = cursor.fetchone()
@@ -312,7 +312,7 @@ def edituser():
                 mysql.connection.commit()
 
 
-        return render_template('editUser.html')
+        return redirect(url_for('edituser'))
     return redirect(url_for('login'))
     
 
@@ -339,6 +339,7 @@ def carmanage():
 
         msg = ''
         if request.method == 'POST' and 'license' in request.form and 'color' in request.form and 'model' in request.form and 'make' in request.form and 'location' in request.form and 'rating' in request.form and 'changeSection' not in request.form:
+            
 
             license = request.form['license']
             color = request.form['color']
@@ -357,9 +358,10 @@ def carmanage():
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
             cursor.execute('SELECT * FROM cars')
             car = cursor.fetchall()
-            return render_template('carmanage.html', car=car)
-
+            return redirect(url_for('carmanage', car=car))
+        
         if request.method == 'POST' and 'license' in request.form and 'newValue' in request.form and 'changeSection' in request.form and 'updatecar' in request.form:
+            print("what the fuck")
             license = request.form['license']
             changeSection = request.form['changeSection']
             newValue = request.form['newValue']
@@ -414,8 +416,8 @@ def carmanage():
             car = cursor.fetchall()
             return redirect(url_for('carmanage', car=car))
 
-        #return render_template('carmanage.html')
-        return redirect(url_for('profile'))
+        return render_template('carmanage.html')
+        
 
 
     return redirect(url_for('login'))
