@@ -124,7 +124,7 @@ def rent():
             cur = str(g.lat) + ',' + str(g.lng)
             
 
-            my_string = '&markers=color:green%7Clabel:C%7C' + cur + '|'
+            my_string = '&markers=color:green%7Clabel:%7C' + cur + '|'
             for row in carsLoc:
                 labelName = str(row['carId'])
                 my_string = my_string + '&markers=color:' + row['color'] + '%7Clabel:' + labelName + '%7C' + row['longlat'] + '|'
