@@ -359,7 +359,7 @@ def carmanage():
             car = cursor.fetchall()
             return render_template('carmanage.html', car=car)
 
-        if request.method == 'POST' and 'license' in request.form and 'newValue' in request.form and 'changeSection' in request.form:
+        if request.method == 'POST' and 'license' in request.form and 'newValue' in request.form and 'changeSection' in request.form and 'updatecar' in request.form:
             license = request.form['license']
             changeSection = request.form['changeSection']
             newValue = request.form['newValue']
@@ -401,22 +401,29 @@ def carmanage():
 
         if request.method == 'POST' and 'license' in request.form and 'delete' in request.form:
             license = request.form['license']
+
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
 
             sql = "DELETE FROM cars WHERE license = %s"
             val = ([license])
             cursor.execute(sql, val)
-            print(sql)
             mysql.connection.commit()
 
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
             cursor.execute('SELECT * FROM cars')
             car = cursor.fetchall()
-            return redirect(url_for('profile', car=car))
+            return redirect(url_for('carmanage', car=car))
 
-        return render_template('carmanage.html')
+        #return render_template('carmanage.html')
+        return redirect(url_for('profile'))
 
 
     return redirect(url_for('login'))
+        
+
+
+        
+
+
 
 
