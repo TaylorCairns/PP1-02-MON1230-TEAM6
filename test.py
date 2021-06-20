@@ -54,8 +54,8 @@ class FLASKTEST(unittest.TestCase):
         tester = app.test_client()
         response = tester.post(
             '/register',
-            data=dict(username="test1", firstName="test1", lastName="test1",
-                      email="test2@test1.com", password="test1", confirmPassword="test1"),
+            data=dict(username="customer", firstName="customer", lastName="customer",
+                      email="customer@customer.com", password="customer", confirmPassword="customer"),
             follow_redirects=True
         )
         self.assertIn(b'Account already exists', response.data)
@@ -65,7 +65,7 @@ class FLASKTEST(unittest.TestCase):
         tester = app.test_client()
         response = tester.post(
             '/',
-            data=dict(username="red", password="red"),
+            data=dict(username="cutomer", password="customer"),
             follow_redirects=True
         )
         response = tester.get('/rent', follow_redirects=True)
@@ -76,7 +76,7 @@ class FLASKTEST(unittest.TestCase):
         tester = app.test_client()
         response = tester.post(
             '/',
-            data=dict(username="red", password="red"),
+            data=dict(username="cutomer", password="cutomer"),
             follow_redirects=True
         )
         response = tester.get('/profile', follow_redirects=True)
@@ -120,7 +120,7 @@ class FLASKTEST(unittest.TestCase):
         tester = app.test_client()
         response = tester.post(
             '/',
-            data=dict(username="test1", password="test1"),
+            data=dict(username="cutomer", password="cutomer"),
             follow_redirects=True
         )
         response = tester.get('/booking', follow_redirects=True)
