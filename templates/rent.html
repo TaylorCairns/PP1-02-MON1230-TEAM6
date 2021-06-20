@@ -104,6 +104,7 @@
       <img src={{url_string}}>
     </p>
     <TR>
+      <TH style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">ID</TH>
       <TH style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">License</TH>
       <TH style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">Make</TH>
       <TH style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">Model</TH>
@@ -113,6 +114,8 @@
     </TR>
     {% for row in cars %}
     <TR>
+      <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">{{row.carId}}</TD>
+
       <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">{{row.license}}</TD>
 
       <TD style="background-color: rgba(0, 0, 0, 0.5); color: #FFFFFF">{{row.make}}</TD>

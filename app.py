@@ -120,10 +120,9 @@ def rent():
             #Gets current location from ip address
             g = geocoder.ip('me')
             
-
             cur = str(g.lat) + ',' + str(g.lng)
             
-
+            #generates the url for the google maps api
             my_string = '&markers=color:green%7Clabel:%7C' + cur + '|'
             for row in carsLoc:
                 labelName = str(row['carId'])
@@ -170,7 +169,6 @@ def booking():
 
 
 #Cancel Booking Function requests data from user and deletes appropriate data from database table
-
 
 @app.route('/cancelBooking', methods=['GET', 'POST'])
 def cancelBooking():
@@ -224,7 +222,7 @@ def logout():
 
         return redirect(url_for('login'))
 
-#Profile Function loads user data on Profile page.
+#Profile Function loads user data on Profile page also allows users to edit their account details.
 
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
@@ -273,7 +271,7 @@ def profile():
     return redirect(url_for('login'))
 
 
-
+#allows only the accounts with admin tags to edit user information
 @app.route('/edituser', methods=['GET', 'POST'])
 def edituser():
     if 'admin' in session['type'] and 'logged' in session:
@@ -318,7 +316,6 @@ def edituser():
 
 
 #Policy Function returns Policy page
-
 
 @app.route('/policy')
 def policy():
