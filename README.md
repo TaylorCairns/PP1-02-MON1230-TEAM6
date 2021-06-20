@@ -40,21 +40,21 @@ Website Credentials
 
 Customer
 
-Username - Customer
+Username - customer
 
-Password - Customer
+Password - customer
 
 Admin
 
-Username - Admin
+Username - admin
 
-Password - Admin
+Password - admin
 
 Manager 
 
-Username - Manager 
+Username - manager 
 
-Password - Manager 
+Password - manager 
 
 
 
