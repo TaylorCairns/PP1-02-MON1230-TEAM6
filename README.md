@@ -30,8 +30,12 @@ Implemented Features
 
 [Github link](https://github.com/TaylorCairns/PP1-02-MON1230-TEAM6)
 
+https://github.com/TaylorCairns/PP1-02-MON1230-TEAM6
+
 
 [Website link](http://pp1-02-mon1230-team6-312012.ts.r.appspot.com/)
+
+http://pp1-02-mon1230-team6-312012.ts.r.appspot.com/
 
 
 
