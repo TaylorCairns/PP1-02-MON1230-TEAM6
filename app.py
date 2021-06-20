@@ -108,7 +108,7 @@ def rent():
 
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
 
-            cursor.execute('SELECT * FROM cars')
+            cursor.execute('SELECT * FROM cars WHERE NOT license = 999999')
             cars = cursor.fetchall()
 
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -329,7 +329,7 @@ def carmanage():
 
         if request.method == 'GET':
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute('SELECT * FROM cars')
+            cursor.execute('SELECT * FROM cars WHERE NOT license = 999999')
             car = cursor.fetchall()
             
             return render_template('carmanage.html', car=car)
@@ -353,7 +353,7 @@ def carmanage():
             mysql.connection.commit()
 
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute('SELECT * FROM cars')
+            cursor.execute('SELECT * FROM cars WHERE NOT license = 999999')
             car = cursor.fetchall()
             return redirect(url_for('carmanage', car=car))
         
@@ -394,7 +394,7 @@ def carmanage():
                 mysql.connection.commit()
 
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute('SELECT * FROM cars')
+            cursor.execute('SELECT * FROM cars WHERE NOT license = "999999"')
             car = cursor.fetchall()
             return redirect(url_for('carmanage', car=car))
 
@@ -409,7 +409,7 @@ def carmanage():
             mysql.connection.commit()
 
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute('SELECT * FROM cars')
+            cursor.execute('SELECT * FROM cars WHERE NOT license = "999999"')
             car = cursor.fetchall()
             return redirect(url_for('carmanage', car=car))
 

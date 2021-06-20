@@ -65,7 +65,7 @@ class FLASKTEST(unittest.TestCase):
         tester = app.test_client()
         response = tester.post(
             '/',
-            data=dict(username="cutomer", password="customer"),
+            data=dict(username="customer", password="customer"),
             follow_redirects=True
         )
         response = tester.get('/rent', follow_redirects=True)
@@ -76,7 +76,7 @@ class FLASKTEST(unittest.TestCase):
         tester = app.test_client()
         response = tester.post(
             '/',
-            data=dict(username="cutomer", password="cutomer"),
+            data=dict(username="customer", password="customer"),
             follow_redirects=True
         )
         response = tester.get('/profile', follow_redirects=True)
@@ -120,7 +120,7 @@ class FLASKTEST(unittest.TestCase):
         tester = app.test_client()
         response = tester.post(
             '/',
-            data=dict(username="cutomer", password="cutomer"),
+            data=dict(username="customer", password="customer"),
             follow_redirects=True
         )
         response = tester.get('/booking', follow_redirects=True)
